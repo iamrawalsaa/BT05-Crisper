@@ -1,0 +1,134 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <RollForward>Major</RollForward>
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <TieredCompilation>false</TieredCompilation>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\sharedMonoGame\ExtendedDrawableGameComponent.cs" Link="shared\ExtendedDrawableGameComponent.cs" />
+    <Compile Include="..\sharedMonoGame\TextRendering.cs" Link="shared\TextRendering.cs" />
+    <Compile Include="..\sharedMonoGame\TweenerSprite.cs" Link="shared\TweenerSprite.cs" />
+    <Compile Include="..\sharedMonoGame\TweenHelper.cs" Link="shared\TweenHelper.cs" />
+    <Compile Include="..\sharedMonoGame\XNAExtensionMethods.cs" Link="shared\XNAExtensionMethods.cs" />
+    <Compile Include="..\sharedMonoGame\ExtensionMethods.cs" Link="shared\ExtensionMethods.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\rna.csv" Link="rna.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="FontStashSharp.MonoGame" Version="1.2.8" />
+    <PackageReference Include="MonoGame.Extended" Version="3.8.0" />
+    <PackageReference Include="MonoGame.Extended.Graphics" Version="3.8.0" />
+    <PackageReference Include="MonoGame.Extended.Tweening" Version="3.8.0" />
+    <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
+    <PackageReference Include="MonoGame.SplineFlower" Version="2.2.0" />
+    <PackageReference Include="MonoGame.SplineFlower.Content" Version="2.2.0" />
+    <PackageReference Include="MonoGame.SplineFlower.Content.Pipeline" Version="2.2.0" />
+    <PackageReference Include="System.IO.Ports" Version="7.0.0" />
+  </ItemGroup>
+	<ItemGroup>
+		<Content Include="Content\videos\**">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FSMSharp\FSMSharp.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MonoGame.Extended.VideoPlayback">
+      <HintPath>..\references\MonoGame.Extended.VideoPlayback.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Extended2">
+      <HintPath>..\references\MonoGame.Extended2.dll</HintPath>
+    </Reference>
+    <Reference Include="Sdcb.FFmpeg">
+      <HintPath>..\references\Sdcb.FFmpeg.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Content\MainHelixSpline.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\MainHelixSpline2.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\MainHelixSpline3.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\videos\attract.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\videos\attract.ogv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\videos\failure.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\videos\failure.ogv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\videos\success.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\videos\success.ogv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+	</ItemGroup>
+	<ItemGroup>
+	<None Update="runtimes\win-x64\native\avcodec-59.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <TargetPath>avcodec-59.dll</TargetPath>
+    </None>
+    <None Update="runtimes\win-x64\native\avdevice-59.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <TargetPath>avdevice-59.dll</TargetPath>
+    </None>
+    <None Update="runtimes\win-x64\native\avfilter-8.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <TargetPath>avfilter-8.dll</TargetPath>
+    </None>
+    <None Update="runtimes\win-x64\native\avformat-59.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <TargetPath>avformat-59.dll</TargetPath>
+    </None>
+    <None Update="runtimes\win-x64\native\avutil-57.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <TargetPath>avutil-57.dll</TargetPath>
+    </None>
+    <None Update="runtimes\win-x64\native\postproc-56.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <TargetPath>postproc-56.dll</TargetPath>
+    </None>
+    <None Update="runtimes\win-x64\native\SDL2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <TargetPath>SDL2.dll</TargetPath>
+    </None>
+    <None Update="runtimes\win-x64\native\soft_oal.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <TargetPath>soft_oal.dll</TargetPath>
+    </None>
+    <None Update="runtimes\win-x64\native\swresample-4.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <TargetPath>swresample-4.dll</TargetPath>
+    </None>
+    <None Update="runtimes\win-x64\native\swscale-6.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <TargetPath>swscale-6.dll</TargetPath>
+    </None>
+  </ItemGroup>
+  <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
+    <Message Text="Restoring dotnet tools" Importance="High" />
+    <Exec Command="dotnet tool restore" />
+  </Target>
+</Project>
