@@ -85,48 +85,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
 	</ItemGroup>
-	<ItemGroup>
-	<None Update="runtimes\win-x64\native\avcodec-59.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  <TargetPath>avcodec-59.dll</TargetPath>
-    </None>
-    <None Update="runtimes\win-x64\native\avdevice-59.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  <TargetPath>avdevice-59.dll</TargetPath>
-    </None>
-    <None Update="runtimes\win-x64\native\avfilter-8.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  <TargetPath>avfilter-8.dll</TargetPath>
-    </None>
-    <None Update="runtimes\win-x64\native\avformat-59.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  <TargetPath>avformat-59.dll</TargetPath>
-    </None>
-    <None Update="runtimes\win-x64\native\avutil-57.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  <TargetPath>avutil-57.dll</TargetPath>
-    </None>
-    <None Update="runtimes\win-x64\native\postproc-56.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  <TargetPath>postproc-56.dll</TargetPath>
-    </None>
-    <None Update="runtimes\win-x64\native\SDL2.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  <TargetPath>SDL2.dll</TargetPath>
-    </None>
-    <None Update="runtimes\win-x64\native\soft_oal.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  <TargetPath>soft_oal.dll</TargetPath>
-    </None>
-    <None Update="runtimes\win-x64\native\swresample-4.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  <TargetPath>swresample-4.dll</TargetPath>
-    </None>
-    <None Update="runtimes\win-x64\native\swscale-6.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  <TargetPath>swscale-6.dll</TargetPath>
-    </None>
-  </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
     <Exec Command="dotnet tool restore" />
