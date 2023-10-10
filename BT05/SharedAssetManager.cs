@@ -62,6 +62,18 @@ namespace BT05
             _textureDatabase.Add("LanguageHindi", texture);
 
             LoadBackgroundsSecondScreen(game);
+            LoadAnimations();
+        }
+
+        private void LoadAnimations()
+        {
+            LoadAnimation("timer", 50, 200, 200, 8, 2, 2);
+        }
+
+        private void LoadAnimation(string animName, int frames, int width, int height, int columns, int paddingX, int paddingY)
+        {
+            var texture = LoadTextureSafe("animations/" + animName);
+            AnimationManager.Instance.AddAnimation(animName, texture, frames, width, height, columns, paddingX, paddingY);
         }
 
         Video _attractVideo, _failureVideo, _successVideo;
@@ -200,7 +212,7 @@ namespace BT05
             LoadTextureIntoDictionary(game, "AltNucleotideRightPAMT", "AltNucleotideRightPAMT");
         }
 
-            private void LoadTextureIntoDictionary(MyGameBase game,string name)
+        private void LoadTextureIntoDictionary(MyGameBase game,string name)
         {
             LoadTextureIntoDictionary(game,name, name);
         }

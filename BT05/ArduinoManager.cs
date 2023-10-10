@@ -200,7 +200,10 @@ namespace BT05
 
         public void CloseSerialPort()
         {
-            _mySerialPort.Close();
+            if (_mySerialPort!= null)
+            {
+                _mySerialPort.Close();
+            }
         }
     }
 }

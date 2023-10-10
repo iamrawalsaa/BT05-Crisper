@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using shared;
 using System.DirectoryServices;
+using SharpDX.Direct3D9;
 
 namespace screens
 {
@@ -17,8 +18,21 @@ namespace screens
     {
         public ScreenPrototypeMessages(MyGameBase game, shared.GamePhase phase) : base(game, phase) { }
 
+        public override void ScreenArriving()
+        {
+            var anim = AnimationManager.Instance.GetAnimation("timer");
+
+            if (anim != null)
+            {
+                anim.SetAnimationLength(8);
+                anim.Reset();
+            }
+            base.ScreenArriving();
+        }
+
         public override void Update(GameTime gameTime)
         {
+            AnimationManager.Instance.Update(gameTime);
         }
 
         public override void DrawSecondScreenInner(GameTime gameTime)
@@ -31,8 +45,12 @@ namespace screens
         public override void DrawInner(GameTime gameTime)
         {
 
-            //var texture = SharedAssetManager.Instance.GetBackground(GamePhase.GAME);
-            //Game._spriteBatch.Draw(texture, Vector2.Zero, Microsoft.Xna.Framework.Color.White);
+            var anim = AnimationManager.Instance.GetAnimation("timer");
+
+            if (anim != null)
+            {
+                Game._spriteBatch.Draw(anim.Texture, Vector2.Zero, anim.GetCurrentFrameRect(), Microsoft.Xna.Framework.Color.White);
+            }
 
             base.DrawInner(gameTime);
         }
