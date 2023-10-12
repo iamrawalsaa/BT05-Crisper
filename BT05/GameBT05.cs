@@ -70,6 +70,8 @@ namespace BT05
                 GameManager.Instance.NextGameState();
             }
 
+            AnimationManager.Instance.Update(gameTime);
+
             base.Update(gameTime);
         }
 

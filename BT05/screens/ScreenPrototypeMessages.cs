@@ -18,21 +18,29 @@ namespace screens
     {
         public ScreenPrototypeMessages(MyGameBase game, shared.GamePhase phase) : base(game, phase) { }
 
+        Animation _anim;
+
         public override void ScreenArriving()
         {
-            var anim = AnimationManager.Instance.GetAnimation("timer");
+            //_anim = AnimationManager.Instance.GetAnimation("timer");
+            //_anim = AnimationManager.Instance.GetAnimation("circlefill");
+            _anim = AnimationManager.Instance.GetAnimation("countdown");
+            //_anim = AnimationManager.Instance.GetAnimation("dna");
+            //_anim = AnimationManager.Instance.GetAnimation("handwave");
+            //_anim = AnimationManager.Instance.GetAnimation("sandtimer");
 
-            if (anim != null)
+
+
+            if (_anim != null)
             {
-                anim.SetAnimationLength(8);
-                anim.Reset();
+                _anim.SetAnimationLength(10);
+                _anim.Reset();
             }
             base.ScreenArriving();
         }
 
         public override void Update(GameTime gameTime)
         {
-            AnimationManager.Instance.Update(gameTime);
         }
 
         public override void DrawSecondScreenInner(GameTime gameTime)
@@ -45,11 +53,11 @@ namespace screens
         public override void DrawInner(GameTime gameTime)
         {
 
-            var anim = AnimationManager.Instance.GetAnimation("timer");
+            //var anim = AnimationManager.Instance.GetAnimation("timer");
 
-            if (anim != null)
+            if (_anim != null)
             {
-                Game._spriteBatch.Draw(anim.Texture, Vector2.Zero, anim.GetCurrentFrameRect(), Microsoft.Xna.Framework.Color.White);
+                Game._spriteBatch.Draw(_anim.Texture, Vector2.Zero, _anim.GetCurrentFrameRect(), Microsoft.Xna.Framework.Color.White);
             }
 
             base.DrawInner(gameTime);

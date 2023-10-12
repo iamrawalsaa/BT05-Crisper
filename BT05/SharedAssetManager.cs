@@ -68,6 +68,11 @@ namespace BT05
         private void LoadAnimations()
         {
             LoadAnimation("timer", 50, 200, 200, 8, 2, 2);
+            LoadAnimation("circlefill", 56, 200, 241, 8, 2, 2);
+            LoadAnimation("countdown", 144, 200, 200, 12, 2, 2);
+            LoadAnimation("dna", 64, 200, 200, 8, 2, 2);
+            LoadAnimation("handwave", 121, 200, 200, 11, 2, 2);
+            LoadAnimation("sandtimer", 60, 200, 200, 8, 2, 2); // pretty rubbish
         }
 
         private void LoadAnimation(string animName, int frames, int width, int height, int columns, int paddingX, int paddingY)

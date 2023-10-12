@@ -19,13 +19,15 @@ namespace BT05
 
     public class Animation
     {
-        AnimationType _type = AnimationType.LOOPING;
+        //AnimationType _type = AnimationType.LOOPING;
 
         string _name = "none";
         int _currentFrame = 0;
         float _timeUntilNextFrame = 0;
         float _timeBetweenFrames = 1;
         Texture2D _texture = null;
+
+        AnimationType _animationType = AnimationType.ONCE;
 
         List<Rectangle> _frames = new List<Rectangle>();
 
@@ -53,19 +55,31 @@ namespace BT05
             }
         }
 
+        public AnimationType AnimationType { get { return _animationType; } set { _animationType = value; }
+
         public void Update( float elapsedTime )
         {
             _timeUntilNextFrame -= elapsedTime;
             if (_timeUntilNextFrame < 0)
             {
-                _timeUntilNextFrame += _timeBetweenFrames;
+                _timeUntilNextFrame = _timeBetweenFrames;
 
-                ++_currentFrame;
-                if ( _currentFrame >= _frames.Count )
+                //if (_name == "circlefill")
                 {
-                    // TODO: Animation - handle looping, should be freeze at the end?
 
-                    _currentFrame = 0;
+                    ++_currentFrame;
+                    if (_currentFrame >= _frames.Count)
+                    {
+                        // TODO: Animation - handle looping, should be freeze at the end?
+                        if (_animationType == AnimationType.LOOPING)
+                        {
+                            _currentFrame = 0;
+                        }
+                        else
+                        {
+                            _currentFrame = _frames.Count - 1;
+                        }
+                    }
                 }
             }
         }
