@@ -137,6 +137,30 @@ namespace SharedMonoGame
             return _game.Content.Load<Texture2D>(filename);
         }
 
+        public Texture2D ConvertToGreyScale(Texture2D inputTexture)
+        {
+            Color[] color = new Color[inputTexture.Width * inputTexture.Height];
+            inputTexture.GetData<Color>(color);
+
+            Texture2D outputTexture = new Texture2D(_game.GraphicsDevice, inputTexture.Width, inputTexture.Height);
+            int count = 0;
+
+            for (int i = 0; i < color.Length; ++i)
+            {
+                ++count;
+                float grey = (0.299f * color[i].R) + (0.587f * color[i].G) + (0.114f * color[i].B);
+                byte b = (byte)grey;
+
+                color[i].R = b;
+                color[i].G = b;
+                color[i].B = b;
+            }
+
+            outputTexture.SetData<Color>(color);
+
+            return outputTexture;
+        }
+
         protected Texture2D LoadTextureSafe(string filename)
         {
             Texture2D texture = null;

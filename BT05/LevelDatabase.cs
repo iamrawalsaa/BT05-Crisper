@@ -12,9 +12,21 @@ using System.Threading.Tasks;
 
 namespace BT05
 {
+    public enum GameDifficulty
+    {
+        easy,
+        medium,
+        hard,
+        complete,
+        none
+    }
+
+
     public class LevelData
     {
         public Level Name { get; set; } = Level.None;
+
+        public GameDifficulty GameDifficulty { get; set; } = GameDifficulty.none;
         public string Title { get; set; } = "";
         public string Description { get; set; } = "";
 
@@ -54,6 +66,30 @@ namespace BT05
         public void Initialise()
         {
             LoadDataFromCSV();
+        }
+
+        public List<Level> GetLevelsOfDifficulty( GameDifficulty targetDifficulty)
+        {
+            List<Level> levels = new List<Level>();
+
+            foreach(var p in _levelDatabase )
+            {
+                if (p.Value.GameDifficulty == targetDifficulty)
+                {
+                    levels.Add(p.Key);
+                }
+            }
+
+            return levels;
+        }
+
+        public Level GetRandomLevelOfDifficulty( GameDifficulty targetDifficulty )
+        {
+            var levels = GetLevelsOfDifficulty( targetDifficulty );
+
+            if (levels.Count == 0) return Level.None;
+
+            return levels.GetRandomElement();
         }
 
         public List<NucleotideEnum> GetCorrectNucleotides( Level level)

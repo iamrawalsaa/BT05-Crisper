@@ -506,6 +506,11 @@ namespace BT05
                 MyScreenManager.Instance.CurrentScreen.PreviousOrientation();
             }
 
+            if (JustPressed(Keys.W))
+            {
+                MyScreenManager.Instance.CurrentScreen.WaveHappened();
+            }
+
             CheckKeyPress();
 
             if (Graphics.IsFullScreen)

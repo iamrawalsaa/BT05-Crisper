@@ -389,6 +389,8 @@ namespace screens
                     _foregroundAlpha-=3;
                 }
             }
+
+            base.Update(gameTime);
         }
 
         int _nextNucleotideToDisplay = 0;

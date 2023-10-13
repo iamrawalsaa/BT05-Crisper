@@ -8,29 +8,29 @@ using MonoGame.Extended.Timers;
 using shared;
 using SharpDX.Direct2D1;
 using SharpDX.Direct3D11;
+using SharpDX.XAudio2;
 using System;
 using System.Collections.Generic;
 
 namespace SharedMonoGame
 {
-    public sealed class SharedScreenData
+    public enum ScreenAdvanceMode
     {
-        private static readonly SharedScreenData _instance = new SharedScreenData();
-
-        public static SharedScreenData Instance
-        {
-            get { return _instance; }
-        }
-
-
-
-        private void InitialiseYData()
-        {
-        }
+        ADVANCE_TIMER,
+        ADVANCE_NONE,
+        ADVANCE_WAVE
     }
 
     public abstract class GameScreenExtended : GameScreen
     {
+        private ScreenAdvanceMode _advanceMode = ScreenAdvanceMode.ADVANCE_NONE;
+        private float _advanceModeTimer = 0;
+
+        protected float _advanceModeTime = 5.0f;
+        protected ScreenAdvanceMode _advanceModeSet = ScreenAdvanceMode.ADVANCE_NONE;
+
+        private bool _isWaveValid = false; // prevent wave for 2-3 seconds
+
         protected new MyGameBase Game => (MyGameBase)base.Game;
         GamePhase _phase = GamePhase.NONE;
 
@@ -433,6 +433,29 @@ namespace SharedMonoGame
             }
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            if (_advanceMode == ScreenAdvanceMode.ADVANCE_TIMER)
+            {
+                if (_advanceModeTimer >0)
+                {
+                    _advanceModeTimer-= gameTime.GetElapsedSeconds();
+
+                    if ( _advanceModeTimer <= 0 )
+                    {
+                        GameManager.Instance.NextGameState();
+                    }
+                }
+            }
+
+            _ignoreWaveTimer -= gameTime.GetElapsedSeconds();
+
+            if (_ignoreWaveTimer <= 0 )
+            {
+                _isWaveValid = true;
+            }
+        }
+
         protected void UpdateDrawables(GameTime gameTime)
         {
             foreach (var draw in _drawables)
@@ -502,14 +525,30 @@ namespace SharedMonoGame
         /// </summary>
         public virtual void ScreenLeaving()
         {
-            
+            _advanceMode = ScreenAdvanceMode.ADVANCE_NONE;
+            _isWaveValid = false;
+            _ignoreWaveTimer = 2.0f;
         }
+
+        public void WaveHappened()
+        {
+            if (_isWaveValid && _advanceMode == ScreenAdvanceMode.ADVANCE_WAVE)
+            {
+                GameManager.Instance.NextGameState();
+            }
+        }
+
+        float _ignoreWaveTimer = 2.0f;
 
         /// <summary>
         /// Called when a screen is about to be transitioned on
         /// </summary>
         public virtual void ScreenArriving()
         {
+            _advanceMode = _advanceModeSet;
+            _advanceModeTimer = _advanceModeTime;
+            _ignoreWaveTimer = 2.0f;
+            _isWaveValid = false;
         }
 
         public virtual void MouseLeftClicked(int x, int y)
@@ -679,7 +718,5 @@ namespace SharedMonoGame
                 Game._spriteBatch.Draw(background, rect, Color.White);
             }
         }
-
-
     }
 }

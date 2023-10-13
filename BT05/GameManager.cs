@@ -10,8 +10,18 @@ using System.Threading.Tasks;
 
 namespace BT05
 {
+
     public sealed class GameManager
     {
+        GameDifficulty _gameDifficulty = GameDifficulty.easy;
+
+        public GameDifficulty GameDifficulty { get { return _gameDifficulty; } }
+
+        public void NextDifficulty()
+        {
+            ++_gameDifficulty;
+        }
+
         Random _random = new Random();
 
         private static readonly GameManager _instance = new GameManager();
@@ -56,7 +66,10 @@ namespace BT05
         public void ResetGame()
         {
             Turns = 1;
+            _gameDifficulty = GameDifficulty.easy;
         }
+
+        
 
         public void NextGameState()
         {

@@ -160,6 +160,7 @@ namespace screens
             }
 
             UpdateDrawables(gameTime);
+            base.Update(gameTime);
         }
 
         private void LanguageStateChanged()

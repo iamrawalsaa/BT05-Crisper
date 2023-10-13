@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BT05;
+using Microsoft.Xna.Framework;
 using SharedMonoGame;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,24 @@ namespace screens
 {
     public class ScreenHowToPlay : GameScreenExtended
     {
-        public ScreenHowToPlay(MyGameBase game, shared.GamePhase phase) : base(game, phase) { }
+        Animation _animLooping;
+
+        public override void ScreenArriving()
+        {
+            _animLooping = AnimationManager.Instance.GetAnimation("handwave");
+
+            if (_animLooping != null)
+            {
+                _animLooping.SetAnimationLength(15);
+                _animLooping.Reset();
+                _animLooping.AnimationType = AnimationType.LOOPING;
+            }
+            base.ScreenArriving();
+        }
+
+        public ScreenHowToPlay(MyGameBase game, shared.GamePhase phase) : base(game, phase) { 
+            _advanceModeSet = ScreenAdvanceMode.ADVANCE_WAVE;
+        }
 
         public override void LoadContent()
         {
@@ -20,6 +38,7 @@ namespace screens
         public override void Update(GameTime gameTime)
         {
             UpdateDrawables(gameTime);
+            base.Update(gameTime);
         }
 
         public override void DrawSecondScreenInner(GameTime gameTime)
@@ -31,16 +50,13 @@ namespace screens
 
         public override void DrawInner(GameTime gameTime)
         {
-            //CheckTextureNeedsRecreating();
+            Rectangle rect = new Rectangle(1650, 700, 200, 200);
+            Vector2 origin = new Vector2(0, 0);
 
-            //Game.GraphicsDevice.Clear(Color.GhostWhite);
-            //var transformMatrix = Game.Camera.GetViewMatrix();
-            //Game._spriteBatch.Begin(transformMatrix: transformMatrix);
-            //DrawPre(gameTime);
-            //DrawTextTexture();
-            //DrawPost(gameTime);
-
-            //Game._spriteBatch.End();
+            if (_animLooping != null)
+            {
+                Game._spriteBatch.Draw(_animLooping.Texture, rect, _animLooping.GetCurrentFrameRect(), Microsoft.Xna.Framework.Color.White, -90, origin, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+            }
         }
     }
 }

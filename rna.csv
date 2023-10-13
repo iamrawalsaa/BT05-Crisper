@@ -1,6 +1,6 @@
-Name,Title,Description,Correct,Wrong1,Wrong2,Wrong3,Wrong4,Wrong5
-SickleCell,Sickle Cell,Cure Sickle Cell,TTTTT,GGGGG,CCCCC,AAAAA,GGGGG,CCCCC
-CowMethane,Cows,Reduce methane production from cows,CGCGC,ATTAA,TATAT,ATATA,TTTAA,AAATT
-Wheat,Wheat,Improve crop resistance to drought,GGGCC,CCCGG,CCCGG,GCGCG,GGCCC,GGCCC
-Mosquito,Mosquito,Lower ability to spread malaria,TCTCG,GCTTC,TTCCG,GCCTT,TTGCC,TTCGC
-HeartDisease,Heart,Reduce cholesterol,TAGCG,TAGGC,TGCGC,TACGG,ATGCG,TACGG
+Name,Title,GameDifficulty,Description,Correct,Wrong1,Wrong2,Wrong3,Wrong4,Wrong5
+SickleCell,Sickle Cell,easy,Cure Sickle Cell,TTTTT,GGGGG,CCCCC,AAAAA,GGGGG,CCCCC
+CowMethane,Cows,medium,Reduce methane production from cows,CGCGC,ATTAA,TATAT,ATATA,TTTAA,AAATT
+Wheat,Wheat,medium,Improve crop resistance to drought,GGGCC,CCCGG,CCCGG,GCGCG,GGCCC,GGCCC
+Mosquito,Mosquito,hard,Lower ability to spread malaria,TCTCG,GCTTC,TTCCG,GCCTT,TTGCC,TTCGC
+HeartDisease,Heart,hard,Reduce cholesterol,TAGCG,TAGGC,TGCGC,TACGG,ATGCG,TACGG

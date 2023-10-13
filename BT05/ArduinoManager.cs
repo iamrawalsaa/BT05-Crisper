@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharedMonoGame;
+using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
@@ -158,8 +159,6 @@ namespace BT05
 
             try
             {
-
-
                 var sections = localMessage.Trim().Split("|");
                 if (sections.Length == 2)
                 {
@@ -185,6 +184,11 @@ namespace BT05
                         {
                             RotationTick = newRotation;
                         }
+                    }
+
+                    if (string.Compare(command, "WAVE", true) == 0)
+                    {
+                        MyScreenManager.Instance.CurrentScreen.WaveHappened();
                     }
                 }
                 else

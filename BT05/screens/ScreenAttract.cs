@@ -12,7 +12,9 @@ namespace screens
 {
     public class ScreenAttract : GameScreenExtended
     {
-        public ScreenAttract(MyGameBase game, shared.GamePhase phase) : base(game, phase) { }
+        public ScreenAttract(MyGameBase game, shared.GamePhase phase) : base(game, phase) {
+            _advanceModeSet = ScreenAdvanceMode.ADVANCE_WAVE;
+        }
 
         public override void LoadContent()
         {
@@ -49,6 +51,7 @@ namespace screens
 //            PrimaryTextOffset = new Vector2(100, 100);
 
             UpdateDrawables(gameTime);
+            base.Update(gameTime);
         }
 
         public override void DrawSecondScreenInner(GameTime gameTime)

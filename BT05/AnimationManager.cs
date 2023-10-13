@@ -20,7 +20,7 @@ namespace BT05
     public class Animation
     {
         //AnimationType _type = AnimationType.LOOPING;
-
+        bool _isRunning = true;
         string _name = "none";
         int _currentFrame = 0;
         float _timeUntilNextFrame = 0;
@@ -35,6 +35,16 @@ namespace BT05
         {
             _name = name;
             _texture = texture;
+        }
+
+        public void Pause()
+        {
+            _isRunning = false;
+        }
+
+        public void Play()
+        {
+            _isRunning=true;
         }
 
         public float TimeBetweenFrames
@@ -55,29 +65,32 @@ namespace BT05
             }
         }
 
-        public AnimationType AnimationType { get { return _animationType; } set { _animationType = value; }
+        public AnimationType AnimationType { get { return _animationType; } set { _animationType = value; } }
 
         public void Update( float elapsedTime )
         {
-            _timeUntilNextFrame -= elapsedTime;
-            if (_timeUntilNextFrame < 0)
+            if (_isRunning)
             {
-                _timeUntilNextFrame = _timeBetweenFrames;
-
-                //if (_name == "circlefill")
+                _timeUntilNextFrame -= elapsedTime;
+                if (_timeUntilNextFrame < 0)
                 {
+                    _timeUntilNextFrame = _timeBetweenFrames;
 
-                    ++_currentFrame;
-                    if (_currentFrame >= _frames.Count)
+                    //if (_name == "circlefill")
                     {
-                        // TODO: Animation - handle looping, should be freeze at the end?
-                        if (_animationType == AnimationType.LOOPING)
+
+                        ++_currentFrame;
+                        if (_currentFrame >= _frames.Count)
                         {
-                            _currentFrame = 0;
-                        }
-                        else
-                        {
-                            _currentFrame = _frames.Count - 1;
+                            // TODO: Animation - handle looping, should be freeze at the end?
+                            if (_animationType == AnimationType.LOOPING)
+                            {
+                                _currentFrame = 0;
+                            }
+                            else
+                            {
+                                _currentFrame = _frames.Count - 1;
+                            }
                         }
                     }
                 }

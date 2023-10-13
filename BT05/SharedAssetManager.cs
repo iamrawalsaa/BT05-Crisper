@@ -27,7 +27,23 @@ namespace BT05
         }
 
         Dictionary<GamePhase, Texture2D> _backgroundsSecondScreen = new Dictionary<GamePhase, Texture2D>();
+        Dictionary<Level, Texture2D> _levelTextures = new Dictionary<Level, Texture2D>();
+        Dictionary<Level, Texture2D> _levelTexturesGrey = new Dictionary<Level, Texture2D>();
 
+
+        public Texture2D GetLevelTexture(Level level, bool levelChosen)
+        {
+            if( levelChosen)
+            {
+                if (_levelTextures.ContainsKey(level)) return _levelTextures[level];
+            }
+            else
+            {
+                if (_levelTexturesGrey.ContainsKey(level)) return _levelTexturesGrey[level];
+            }
+
+            return Missing;
+        }
 
         public void LoadContent(MyGameBase game)
         {
@@ -63,6 +79,7 @@ namespace BT05
 
             LoadBackgroundsSecondScreen(game);
             LoadAnimations();
+            LoadLevels();
         }
 
         private void LoadAnimations()
@@ -73,6 +90,22 @@ namespace BT05
             LoadAnimation("dna", 64, 200, 200, 8, 2, 2);
             LoadAnimation("handwave", 121, 200, 200, 11, 2, 2);
             LoadAnimation("sandtimer", 60, 200, 200, 8, 2, 2); // pretty rubbish
+        }
+
+        void LoadLevels()
+        {
+            foreach(Level l in Enum.GetValues(typeof(Level)))
+            {
+                if (l!= Level.None && l!= Level.MAX_LEVEL)
+                {
+                    var tex = LoadTextureSafe("levels/"+l.ToString().ToLower());
+                    if (tex != null)
+                    {
+                        _levelTextures.Add(l, tex);
+                        _levelTexturesGrey.Add(l, ConvertToGreyScale(tex));
+                    }
+                }
+            }
         }
 
         private void LoadAnimation(string animName, int frames, int width, int height, int columns, int paddingX, int paddingY)

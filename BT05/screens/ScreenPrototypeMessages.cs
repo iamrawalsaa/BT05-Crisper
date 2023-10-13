@@ -16,31 +16,35 @@ namespace screens
 {
     public class ScreenPrototypeMessages : GameScreenExtended
     {
-        public ScreenPrototypeMessages(MyGameBase game, shared.GamePhase phase) : base(game, phase) { }
+        public ScreenPrototypeMessages(MyGameBase game, shared.GamePhase phase) : base(game, phase) {
+            _advanceModeSet = ScreenAdvanceMode.ADVANCE_TIMER;
+            _advanceModeTime = 10.0f;
+        }
 
-        Animation _anim;
+        Animation _animLooping;
 
         public override void ScreenArriving()
         {
-            //_anim = AnimationManager.Instance.GetAnimation("timer");
+            _animLooping = AnimationManager.Instance.GetAnimation("timer");
             //_anim = AnimationManager.Instance.GetAnimation("circlefill");
-            _anim = AnimationManager.Instance.GetAnimation("countdown");
+            //_anim = AnimationManager.Instance.GetAnimation("countdown");
             //_anim = AnimationManager.Instance.GetAnimation("dna");
             //_anim = AnimationManager.Instance.GetAnimation("handwave");
             //_anim = AnimationManager.Instance.GetAnimation("sandtimer");
 
 
 
-            if (_anim != null)
+            if (_animLooping != null)
             {
-                _anim.SetAnimationLength(10);
-                _anim.Reset();
+                _animLooping.SetAnimationLength(_advanceModeTime);
+                _animLooping.Reset();
             }
             base.ScreenArriving();
         }
 
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
         }
 
         public override void DrawSecondScreenInner(GameTime gameTime)
@@ -55,9 +59,9 @@ namespace screens
 
             //var anim = AnimationManager.Instance.GetAnimation("timer");
 
-            if (_anim != null)
+            if (_animLooping != null)
             {
-                Game._spriteBatch.Draw(_anim.Texture, Vector2.Zero, _anim.GetCurrentFrameRect(), Microsoft.Xna.Framework.Color.White);
+                Game._spriteBatch.Draw(_animLooping.Texture, Vector2.Zero, _animLooping.GetCurrentFrameRect(), Microsoft.Xna.Framework.Color.White);
             }
 
             base.DrawInner(gameTime);

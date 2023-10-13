@@ -20,20 +20,11 @@ namespace screens
         public override void Update(GameTime gameTime)
         {
             UpdateDrawables(gameTime);
+            base.Update(gameTime);
         }
 
         public override void DrawInner(GameTime gameTime)
         {
-            //CheckTextureNeedsRecreating();
-
-            //Game.GraphicsDevice.Clear(Color.GhostWhite);
-            //var transformMatrix = Game.Camera.GetViewMatrix();
-            //Game._spriteBatch.Begin(transformMatrix: transformMatrix);
-            //DrawPre(gameTime);
-            //DrawTextTexture();
-            //DrawPost(gameTime);
-
-            //Game._spriteBatch.End();
         }
 
         public override void DrawSecondScreenInner(GameTime gameTime)

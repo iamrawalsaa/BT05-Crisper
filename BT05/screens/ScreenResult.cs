@@ -84,6 +84,8 @@ namespace screens
                     }
                 }
             }
+
+            base.Update(gameTime);
         }
 
         public override void DrawSecondScreenInner(GameTime gameTime)
