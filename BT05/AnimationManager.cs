@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using SharedMonoGame;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,6 +12,84 @@ using System.Threading.Tasks;
 
 namespace BT05
 {
+    /// <summary>
+    /// This is used to hold an animation and it's onscreen location / rotation
+    /// Potentially extend this to transition on
+    /// Using tweening
+    /// </summary>
+    public class OnScreenAnimation
+    {
+        string _animName;
+        Animation _animation;
+        Rectangle _screenRect;
+        float _rotation = 0;
+        MyGameBase _myGame;
+        bool _show = true;
+
+        public OnScreenAnimation(MyGameBase myGame, string animName, Rectangle rect, float rotation = 0, float length = 5, AnimationType animType = AnimationType.LOOPING)
+        {
+            _myGame = myGame;
+            _animName = animName;
+            _screenRect = rect;
+            _rotation = MathHelper.ToRadians(rotation);
+
+            _animation = AnimationManager.Instance.GetAnimation(animName);
+
+            if (_animation != null)
+            {
+                _animation.SetAnimationLength(length);
+                _animation.Reset();
+                _animation.AnimationType = animType;
+            }
+        }
+
+        public void DrawSpriteSheetAnim()
+        {
+            if (_animation != null && _show)
+            {
+                Rectangle source = _animation.GetCurrentFrameRect();
+                Vector2 origin = new Vector2(source.Width / 2, source.Height / 2);
+
+                _myGame._spriteBatch.Draw(_animation.Texture, _screenRect, source, Microsoft.Xna.Framework.Color.White, _rotation, origin, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+            }
+        }
+
+        public void Reset()
+        {
+            if ( _animation != null )
+            {
+                _animation.Reset();
+            }
+        }
+
+        public void Pause()
+        {
+            if (_animation != null)
+            {
+                _animation.Pause();
+            }
+        }
+
+        public void Play()
+        {
+            if (_animation != null)
+            {
+                _animation.Play();
+            }
+        }
+
+        public void Show()
+        {
+            _show = true;
+        }
+
+        public void Hide()
+        {
+            _show = false;
+        }
+
+    }
+
     public enum AnimationType
     {
         ONCE,

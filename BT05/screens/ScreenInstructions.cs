@@ -11,23 +11,26 @@ namespace screens
 {
     public class ScreenInstructions : GameScreenExtended
     {
-        Animation _animLooping;
+        //Animation _animLooping;
 
         public override void ScreenArriving()
         {
-            _animLooping = AnimationManager.Instance.GetAnimation("handwave");
+            //_animLooping = AnimationManager.Instance.GetAnimation("handwave");
 
-            if (_animLooping != null)
-            {
-                _animLooping.SetAnimationLength(15);
-                _animLooping.Reset();
-                _animLooping.AnimationType = AnimationType.LOOPING;
-            }
+            //if (_animLooping != null)
+            //{
+            //    _animLooping.SetAnimationLength(15);
+            //    _animLooping.Reset();
+            //    _animLooping.AnimationType = AnimationType.LOOPING;
+            //}
             base.ScreenArriving();
         }
 
         public ScreenInstructions(MyGameBase game, shared.GamePhase phase) : base(game, phase) {
             _advanceModeSet = ScreenAdvanceMode.ADVANCE_WAVE;
+
+            Rectangle animScreenRect = new Rectangle(1700, 540, 200, 200);
+            _defaultAnimation = new OnScreenAnimation(Game, "handwave", animScreenRect, -90, 15, AnimationType.LOOPING);
         }
 
         public override void LoadContent()
@@ -51,13 +54,11 @@ namespace screens
 
         public override void DrawInner(GameTime gameTime)
         {
-            Rectangle rect = new Rectangle(1650,700,200,200);
-            Vector2 origin = new Vector2(0, 0);
+            //Rectangle animScreenRect = new Rectangle(1700,540,200,200);
+            //DrawSpriteSheetAnim(_animLooping, animScreenRect, -90);
 
-            if (_animLooping != null)
-            {
-                Game._spriteBatch.Draw(_animLooping.Texture, rect, _animLooping.GetCurrentFrameRect(), Microsoft.Xna.Framework.Color.White, -90, origin, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
-            }
+            base.DrawInner(gameTime);
+
         }
     }
 }

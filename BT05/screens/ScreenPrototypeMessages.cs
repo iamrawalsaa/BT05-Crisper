@@ -19,26 +19,20 @@ namespace screens
         public ScreenPrototypeMessages(MyGameBase game, shared.GamePhase phase) : base(game, phase) {
             _advanceModeSet = ScreenAdvanceMode.ADVANCE_TIMER;
             _advanceModeTime = 10.0f;
-        }
 
-        Animation _animLooping;
+            Rectangle animScreenRect = new Rectangle(1700, 540, 200, 200);
+            _defaultAnimation = new OnScreenAnimation(Game, "circlefill", animScreenRect, -90, 10, AnimationType.ONCE);
+        }
 
         public override void ScreenArriving()
         {
-            _animLooping = AnimationManager.Instance.GetAnimation("timer");
+            //_animLooping = AnimationManager.Instance.GetAnimation("timer");
             //_anim = AnimationManager.Instance.GetAnimation("circlefill");
             //_anim = AnimationManager.Instance.GetAnimation("countdown");
             //_anim = AnimationManager.Instance.GetAnimation("dna");
             //_anim = AnimationManager.Instance.GetAnimation("handwave");
             //_anim = AnimationManager.Instance.GetAnimation("sandtimer");
 
-
-
-            if (_animLooping != null)
-            {
-                _animLooping.SetAnimationLength(_advanceModeTime);
-                _animLooping.Reset();
-            }
             base.ScreenArriving();
         }
 
@@ -56,14 +50,6 @@ namespace screens
 
         public override void DrawInner(GameTime gameTime)
         {
-
-            //var anim = AnimationManager.Instance.GetAnimation("timer");
-
-            if (_animLooping != null)
-            {
-                Game._spriteBatch.Draw(_animLooping.Texture, Vector2.Zero, _animLooping.GetCurrentFrameRect(), Microsoft.Xna.Framework.Color.White);
-            }
-
             base.DrawInner(gameTime);
         }
     }

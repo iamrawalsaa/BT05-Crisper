@@ -5,6 +5,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended.Timers;
+using screens;
 using shared;
 using SharpDX.Direct2D1;
 using SharpDX.Direct3D11;
@@ -414,7 +415,7 @@ namespace SharedMonoGame
                 Game._spriteBatch.FillRectangle(Game.LastRect, color);                    
             }
             
-            Game._spriteBatch.DrawString(SharedAssetManager.Instance.FontConsole, DebugOutput.Instance.LiveString, new Vector2(0, 0), Color.White);
+            // Game._spriteBatch.DrawString(SharedAssetManager.Instance.FontConsole, DebugOutput.Instance.LiveString, new Vector2(0, 0), Color.White);
         }
 
         private void DrawGenericTweenerSprites(GameTime gameTime)
@@ -549,6 +550,11 @@ namespace SharedMonoGame
             _advanceModeTimer = _advanceModeTime;
             _ignoreWaveTimer = 2.0f;
             _isWaveValid = false;
+
+            if (_defaultAnimation != null)
+            {
+                _defaultAnimation.Reset();
+            }
         }
 
         public virtual void MouseLeftClicked(int x, int y)
@@ -621,10 +627,29 @@ namespace SharedMonoGame
             GameBT05 gameBT05 = Game as GameBT05;
             if (gameBT05 != null)
             {
-                if ( gameBT05.IsDualScreen )
+                
+                if (gameBT05.IsDualScreen)
                 {
-                    Game._spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, 1920, 1080), Color.White);
-                    Game._spriteBatch.Draw(_renderTargetSecondScreen, new Rectangle(1920, 0, 1920, 1080), Color.White);
+                    if (gameBT05.ShowMini)
+                    {
+                        // render the screens smaller
+                        Game._spriteBatch.Draw(_renderTarget, new Rectangle(0, 270, 960, 540), Color.White);
+                        Game._spriteBatch.Draw(_renderTargetSecondScreen, new Rectangle(960, 270, 960, 540), Color.White);
+                    }
+                    else
+                    {
+                        if (gameBT05.ShowMainPlayerFirst)
+                        {
+                            Game._spriteBatch.Draw(_renderTarget, new Rectangle(0, 0, 1920, 1080), Color.White);
+                            Game._spriteBatch.Draw(_renderTargetSecondScreen, new Rectangle(1920, 0, 1920, 1080), Color.White);
+                        }
+                        else
+                        {
+                            Game._spriteBatch.Draw(_renderTargetSecondScreen, new Rectangle(0, 0, 1920, 1080), Color.White);
+                            Game._spriteBatch.Draw(_renderTarget, new Rectangle(1920, 0, 1920, 1080), Color.White);
+
+                        }
+                    }
                 }
                 else
                 {
@@ -695,7 +720,10 @@ namespace SharedMonoGame
 
         public virtual void DrawInner(GameTime gameTime)
         {
-
+            if (_defaultAnimation != null)
+            {
+                _defaultAnimation.DrawSpriteSheetAnim();
+            }
         }
 
         public virtual void DrawSecondScreenInner(GameTime gameTime)
@@ -718,5 +746,12 @@ namespace SharedMonoGame
                 Game._spriteBatch.Draw(background, rect, Color.White);
             }
         }
+
+        /// <summary>
+        /// This is a standard animation on every page. It can be null. 
+        /// Needs to be initialised in the constructor
+        /// </summary>
+        protected OnScreenAnimation _defaultAnimation; 
+
     }
 }

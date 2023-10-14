@@ -178,6 +178,18 @@ namespace BT05
             get { return _dualScreens; }
         }
 
+        bool _showMainPlayerFirst = true;
+        public bool ShowMainPlayerFirst
+        {
+            get { return _showMainPlayerFirst; }
+        }
+
+        bool _showMini = false;
+        public bool ShowMini
+        {
+            get { return _showMini; }
+        }
+
         private void CheckKeyPress()
         {
             _currentState = Keyboard.GetState();
@@ -197,6 +209,16 @@ namespace BT05
 
                     Graphics.ApplyChanges();
                 }
+            }
+
+            if (JustPressed(Keys.B))
+            {
+                _showMainPlayerFirst = !_showMainPlayerFirst;
+            }
+
+            if (JustPressed(Keys.M))
+            {
+                _showMini = !_showMini;
             }
 
             if (JustPressed(Keys.D))

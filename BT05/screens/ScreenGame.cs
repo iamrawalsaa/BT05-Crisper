@@ -98,6 +98,8 @@ namespace screens
 
         public override void ScreenArriving()
         {
+            MusicManager.Instance.PlaySong(MusicEnum.GAME);
+
             ShowPrimaryText = false;
             ShowSecondaryText = false;
             _highlightCorrectAnswerOnSecondScreen = false;
@@ -473,6 +475,8 @@ namespace screens
         public override void DrawInner(GameTime gameTime)
         {
             DrawStandard();
+            base.DrawInner(gameTime);
+
         }
 
         private void DrawStandard()

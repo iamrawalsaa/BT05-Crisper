@@ -14,6 +14,9 @@ namespace screens
     {
         public ScreenAttract(MyGameBase game, shared.GamePhase phase) : base(game, phase) {
             _advanceModeSet = ScreenAdvanceMode.ADVANCE_WAVE;
+
+            Rectangle animScreenRect = new Rectangle(1700, 540, 200, 200);
+            _defaultAnimation = new OnScreenAnimation(Game, "handwave", animScreenRect, -90, 15, AnimationType.LOOPING);
         }
 
         public override void LoadContent()
@@ -23,11 +26,12 @@ namespace screens
 
         public override void ScreenArriving()
         {
+            MusicManager.Instance.PlaySong(MusicEnum.ATTRACT);
+
             PrimaryTextFontColour = Color.White;
             SecondaryTextFontColour = Color.White;
 
             GameManager.Instance.ResetGame();
-
             VideoManager.Instance.Play( VideoKey.attract);
 
             base.ScreenArriving();
@@ -35,7 +39,7 @@ namespace screens
 
         public override void ScreenLeaving()
         {
-            VideoManager.Instance.Stop();
+            //VideoManager.Instance.Stop();
             base.ScreenLeaving();
         }
 
@@ -63,13 +67,20 @@ namespace screens
 
         public override void DrawInner(GameTime gameTime)
         {
+            DrawVideoTexture();
+
+            base.DrawInner(gameTime);
+        }
+
+        private void DrawVideoTexture()
+        {
             var texture = VideoManager.Instance.GetVideoTexture();
 
-            if (texture != null )
+            if (texture != null)
             {
-                Vector2 centre = new Vector2( texture.Width / 2, texture.Height / 2 );
+                Vector2 centre = new Vector2(texture.Width / 2, texture.Height / 2);
                 //centre = new Vector2(0, 0);
-                Rectangle screenRect = new Rectangle(0,1080, 1080,1920);
+                Rectangle screenRect = new Rectangle(0, 1080, 1080, 1920);
                 //screenRect = new Rectangle(100, 100, 500, 500);
 
                 centre = new Vector2(screenRect.Width, screenRect.Height) / 2;
@@ -79,17 +90,6 @@ namespace screens
 
                 Game._spriteBatch.Draw(texture, screenRect, null, Color.White, rotation, centre, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0f);
             }
-
-            //CheckTextureNeedsRecreating();
-
-            //Game.GraphicsDevice.Clear(Color.GhostWhite);
-            //var transformMatrix = Game.Camera.GetViewMatrix();
-            //Game._spriteBatch.Begin(transformMatrix: transformMatrix);
-            //DrawPre(gameTime);
-            //DrawTextTexture();
-            //DrawPost(gameTime);
-
-            //Game._spriteBatch.End();
         }
     }
 }

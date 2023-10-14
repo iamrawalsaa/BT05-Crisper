@@ -19,7 +19,12 @@ namespace screens
 
     public class ScreenLanguage : GameScreenExtended
     {
-        public ScreenLanguage(MyGameBase game, shared.GamePhase phase) : base(game, phase) { }
+        public ScreenLanguage(MyGameBase game, shared.GamePhase phase) : base(game, phase) {
+            _advanceModeSet = ScreenAdvanceMode.ADVANCE_WAVE;
+
+            Rectangle animScreenRect = new Rectangle(1700, 540, 200, 200);
+            _defaultAnimation = new OnScreenAnimation(Game, "handwave", animScreenRect, -90, 15, AnimationType.LOOPING);
+        }
 
         public override void LoadContent()
         {
@@ -32,6 +37,8 @@ namespace screens
 
         public override void ScreenArriving()
         {
+            MusicManager.Instance.PlaySong(MusicEnum.INTRO);
+
             Setup();
 
             base.ScreenArriving();
@@ -197,7 +204,10 @@ namespace screens
 
         public override void DrawInner(GameTime gameTime)
         {
-            
+            //Rectangle animScreenRect = new Rectangle(1700, 540, 200, 200);
+            //DrawSpriteSheetAnim(_animLooping, animScreenRect, -90);
+
+            base.DrawInner(gameTime);
         }
 
         public override void MouseDragChanged(int xChange, int yChange)

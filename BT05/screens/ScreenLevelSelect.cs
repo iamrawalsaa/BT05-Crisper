@@ -14,7 +14,7 @@ namespace screens
     {
         float _changeTime = 1.0f;
         float _totalTime = 5.0f;
-        private bool _leavingToNextState = false;
+        //private bool _leavingToNextState = false;
 
         Level _targetLevel = Level.None;
         bool _levelChosen = false;
@@ -30,7 +30,13 @@ namespace screens
 
         LevelSelectionPhases _levelPhase = LevelSelectionPhases.RandomlyShowAll;
 
-        public ScreenLevelSelect(MyGameBase game, shared.GamePhase phase) : base(game, phase) { }
+        public ScreenLevelSelect(MyGameBase game, shared.GamePhase phase) : base(game, phase) {
+            _advanceModeSet = ScreenAdvanceMode.ADVANCE_NONE;
+
+            Rectangle animScreenRect = new Rectangle(1700, 540, 200, 200);
+            _defaultAnimation = new OnScreenAnimation(Game, "countdown", animScreenRect, -90, 5, AnimationType.ONCE);
+            _defaultAnimation.Pause();
+        }
 
         public override void LoadContent()
         {
@@ -39,7 +45,8 @@ namespace screens
 
         public override void ScreenArriving()
         {
-            _leavingToNextState = false;
+            _defaultAnimation.Hide();
+            //_leavingToNextState = false;
             _changeTime = 3.0f;
             _totalTime = 10.0f;
             _levelPhase = LevelSelectionPhases.RandomlyShowAll;
@@ -47,7 +54,7 @@ namespace screens
             _firstShown = false;
 
             PrimaryText = "{{HOT_PINK}}Randomly choosing your level!";
-            SecondaryText = "{{WHITE}}Skip to level with keys:\n1. SickleCell\n2. CowMethane\n3. Wheat\n4. Mosquito\n5. HeartDisease";
+            SecondaryText = "";// "{{WHITE}}Skip to level with keys:\n1. SickleCell\n2. CowMethane\n3. Wheat\n4. Mosquito\n5. HeartDisease";
 
             _targetLevel = LevelDatabase.Instance.GetRandomLevelOfDifficulty(GameManager.Instance.GameDifficulty);
 
@@ -70,8 +77,9 @@ namespace screens
                 case LevelSelectionPhases.RandomlyShowAll:
                     if (_changeTime < 0.0f)
                     {
-                        _changeTime = 0.5f;
+                        _changeTime = 1.0f;
                         RandomlyChooseNewLevel();
+                        SoundEffectManager.Instance.PlaySound(SoundEffectEnum.LEVEL_SELECT_RANDOM);
                         _firstShown = true;
                     }
 
@@ -85,7 +93,11 @@ namespace screens
                     if (GameManager.Instance.Level == _targetLevel)
                     {
                         _levelPhase = LevelSelectionPhases.EndResult;
+                        _defaultAnimation.Play();
+                        _defaultAnimation.Show();
                         LevelHasBeenChosen();
+                        SoundEffectManager.Instance.PlaySound(SoundEffectEnum.LEVEL_SELECT_CHOSEN);
+
                         _totalTime = 5.0f;
                         _levelChosen = true;
                     }
@@ -93,8 +105,9 @@ namespace screens
                     {
                         if (_changeTime < 0.0f)
                         {
-                            _changeTime = 0.5f;
+                            _changeTime = 1.0f;
                             RandomlyChooseNewLevel();
+                            SoundEffectManager.Instance.PlaySound(SoundEffectEnum.LEVEL_SELECT_RANDOM);
                         }
                     }
 
@@ -160,6 +173,13 @@ namespace screens
 
         public override void DrawInner(GameTime gameTime)
         {
+            DrawDiseaseTexture();
+
+            base.DrawInner(gameTime);
+        }
+
+        private void DrawDiseaseTexture()
+        {
             if (_firstShown)
             {
                 var level = GameManager.Instance.Level;
@@ -173,8 +193,6 @@ namespace screens
                     Game._spriteBatch.Draw(tex, rect, null, Microsoft.Xna.Framework.Color.White, rot, origin, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
                 }
             }
-
-            base.DrawInner(gameTime);
         }
 
         /// <summary>

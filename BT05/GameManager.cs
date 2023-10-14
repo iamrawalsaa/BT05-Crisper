@@ -105,12 +105,16 @@ namespace BT05
                 case GamePhase.PROTOTYPEMESSAGES:
                     ScreenPrototypeMessages screenPrototype = MyScreenManager.Instance.GetScreen(GamePhase.PROTOTYPEMESSAGES) as ScreenPrototypeMessages;
 
-                    screenPrototype.PrimaryText = "{{WHITE}}This is a playable version of BT05.\nThe final game may be played across two screens. This version can be played on just one.\n{{RED}}See printed instructions.";
-                    screenPrototype.SecondaryText = "{{WHITE}}Keys\n{{BLUE}}Enter: {{WHITE}}jump to next state\n{{BLUE}}G:{{WHITE}} Large Window\n{{BLUE}}F:{{WHITE}} Fullscreen";
+                    screenPrototype.PrimaryText = "Version: 2.01\n\n{{WHITE}}This is a playable version of BT05.\nThis runs across two screens.\nAll graphical content has been made by John\nIt requires input from Third Space on the text content & Bakarmax on the graphics\n{{RED}}See printed instructions.";
+                    screenPrototype.SecondaryText = "{{WHITE}}Keys\n{{BLUE}}Enter: {{WHITE}}jump to next state\n{{BLUE}}G:{{WHITE}} Large Window\n{{BLUE}}F:{{WHITE}} Fullscreen\n{{BLUE}}V:{{WHITE}} Dual screen mode\n{{BLUE}}W:{{WHITE}} Wave";
 
                     screenPrototype.PrimaryTextOrientation = ScreenOrientation.Portrait;
                     screenPrototype.SecondaryTextOrientation = ScreenOrientation.Portrait;
-                    
+
+                    screenPrototype.PrimaryTextOffset = new Vector2(100, 0);
+                    screenPrototype.SecondaryTextOffset = new Vector2(-200, 0);
+
+
                     break;
                 case GamePhase.ATTRACT:
                     ScreenAttract screenAttract = MyScreenManager.Instance.GetScreen(GamePhase.ATTRACT) as ScreenAttract;
@@ -118,10 +122,11 @@ namespace BT05
                     screenAttract.PrimaryTextOffset = new Vector2(200, 0);
                     screenAttract.SecondaryTextOffset = new Vector2(100, 0);
 
-                    screenAttract.PrimaryText = "{{WHITE}}Stand on the floor markers and operate the Scissors together.";
-                    screenAttract.ShowPrimaryText = false;
+                    screenAttract.PrimaryText = "{{WHITE}}Stand on the floor markers and operate the Scissors together to begin.";
+                    screenAttract.ShowPrimaryText = true;
 
-                    screenAttract.SecondaryText = "{{WHITE}}Keys\n{{BLUE}}Z: {{WHITE}}Player 1 scissors\n{{BLUE}}RIGHT MOUSE:{{WHITE}} Player 2 scissors\n";
+                    //screenAttract.SecondaryText = "{{WHITE}}Keys\n{{BLUE}}Z: {{WHITE}}Player 1 scissors\n{{BLUE}}RIGHT MOUSE:{{WHITE}} Player 2 scissors\n";
+                    screenAttract.SecondaryText = "";
 
                     screenAttract.PrimaryTextOrientation = ScreenOrientation.Portrait;
                     screenAttract.SecondaryTextOrientation = ScreenOrientation.Portrait;
@@ -220,9 +225,18 @@ namespace BT05
         {
         }
 
+        /// <summary>
+        /// Generate a new Level
+        /// Make sure it's not the same as the current one
+        /// </summary>
         public void GenerateNewLevelChoice()
         {
-            _level = (Level)_random.Next(1, (int)(Level.MAX_LEVEL));
+            Level newLevel = Level.None;
+            do
+            {
+                newLevel = (Level)_random.Next(1, (int)(Level.MAX_LEVEL));
+            } while (_level == newLevel);
+            _level = newLevel;
         }
     }
 }

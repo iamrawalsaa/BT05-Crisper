@@ -101,6 +101,10 @@ namespace SharedMonoGame
         {
             base.LoadContent();
             _spriteBatch = new Microsoft.Xna.Framework.Graphics.SpriteBatch(GraphicsDevice);
+
+            MusicManager.Instance.LoadContent(Content);
+            SoundEffectManager.Instance.LoadContent(Content);
+
         }
 
         public bool JustPressed(Keys key)
@@ -312,6 +316,9 @@ namespace SharedMonoGame
 
             InnerUpdate(gameTime);
             CameraControls();
+
+            MusicManager.Instance.Update(gameTime);
+            SoundEffectManager.Instance.Update(gameTime);
 
             _oldKeyboardState = Keyboard.GetState();
             _oldMouseState = Mouse.GetState();

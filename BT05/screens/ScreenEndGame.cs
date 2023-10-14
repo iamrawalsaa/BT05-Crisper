@@ -25,6 +25,8 @@ namespace screens
 
         public override void DrawInner(GameTime gameTime)
         {
+            base.DrawInner(gameTime);
+
         }
 
         public override void DrawSecondScreenInner(GameTime gameTime)

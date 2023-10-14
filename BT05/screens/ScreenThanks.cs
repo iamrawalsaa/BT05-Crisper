@@ -64,7 +64,7 @@ namespace screens
 
         public override void DrawInner(GameTime gameTime)
         {
-
+            base.DrawInner(gameTime);
         }
     }
 }
