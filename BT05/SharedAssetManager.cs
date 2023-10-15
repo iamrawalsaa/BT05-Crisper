@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using MonoGame.Extended.Content;
+using screens;
 using shared;
 using SharedMonoGame;
 using SharpDX.Direct3D9;
@@ -27,6 +28,11 @@ namespace BT05
         }
 
         Dictionary<GamePhase, Texture2D> _backgroundsSecondScreen = new Dictionary<GamePhase, Texture2D>();
+
+        Dictionary<GamePhase, Texture2D> _backgroundsSecondScreenHindi = new Dictionary<GamePhase, Texture2D>();
+        Dictionary<GamePhase, Texture2D> _backgroundsHindi = new Dictionary<GamePhase, Texture2D>();
+
+
         Dictionary<Level, Texture2D> _levelTextures = new Dictionary<Level, Texture2D>();
         Dictionary<Level, Texture2D> _levelTexturesGrey = new Dictionary<Level, Texture2D>();
 
@@ -268,7 +274,29 @@ namespace BT05
                 if (phase != GamePhase.NONE)
                 {
                     AddBackgroundSecondScreen(game, phase);
+                    AddBackgroundSecondScreenHindi(game, phase);
+                    AddBackgroundHindi(game, phase);
                 }
+            }
+        }
+
+        private void AddBackgroundHindi(MyGameBase game, GamePhase phase)
+        {
+            string filename = "backgrounds-Hindi/background-" + phase;
+            var texture = LoadTextureSafe(filename);
+            if (texture != null)
+            {
+                _backgroundsHindi.Add(phase, texture);
+            }
+        }
+
+        private void AddBackgroundSecondScreenHindi(MyGameBase game, GamePhase phase)
+        {
+            string filename = "backgroundsSecondScreen-Hindi/background-" + phase;
+            var texture = LoadTextureSafe(filename);
+            if (texture != null)
+            {
+                _backgroundsSecondScreenHindi.Add(phase, texture);
             }
         }
 
@@ -282,11 +310,43 @@ namespace BT05
             }
         }
 
-        public Texture2D GetBackgroundSecondScreen(GamePhase phase)
+        public Texture2D GetBackground(GamePhase phase, Language lang)
         {
-            if (_backgroundsSecondScreen.ContainsKey(phase))
+            if (lang == Language.english)
             {
-                return _backgroundsSecondScreen[phase];
+                if (_backgrounds.ContainsKey(phase))
+                {
+                    return _backgrounds[phase];
+                }
+            }
+
+            if (lang == Language.hindi)
+            {
+                if (_backgroundsHindi.ContainsKey(phase))
+                {
+                    return _backgroundsHindi[phase];
+                }
+            }
+
+            return Blank;
+        }
+
+        public Texture2D GetBackgroundSecondScreen(GamePhase phase, Language lang = Language.english)
+        {
+            if (lang == Language.english)
+            {
+                if (_backgroundsSecondScreen.ContainsKey(phase))
+                {
+                    return _backgroundsSecondScreen[phase];
+                }
+            }
+
+            if (lang == Language.hindi)
+            {
+                if (_backgroundsSecondScreenHindi.ContainsKey(phase))
+                {
+                    return _backgroundsSecondScreenHindi[phase];
+                }
             }
 
             return Blank;

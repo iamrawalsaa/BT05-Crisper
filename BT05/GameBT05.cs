@@ -221,6 +221,16 @@ namespace BT05
                 _showMini = !_showMini;
             }
 
+            if (JustPressed(Keys.E))
+            {
+                GameManager.Instance.LanguageChangedByArduino(Language.english);
+            }
+
+            if (JustPressed(Keys.H))
+            {
+                GameManager.Instance.LanguageChangedByArduino(Language.hindi);
+            }
+
             if (JustPressed(Keys.D))
             {
                 DebugOutput.Instance.ShowDebug = !DebugOutput.Instance.ShowDebug;
@@ -270,7 +280,18 @@ namespace BT05
 
             if (JustPressed(Keys.T))
             {
-                TakeScreenCap();
+                if (_isShiftDown)
+                {
+                    TakeScreenCap();
+                }
+                else
+                {
+                    var currentScreen = MyScreenManager.Instance.CurrentScreen;
+                    if (currentScreen != null)
+                    {
+                        currentScreen.WriteNextFrameToDisk();
+                    }
+                }
             }
 
             ScreenPrototypeMessages screen = MyScreenManager.Instance.CurrentScreen as ScreenPrototypeMessages;

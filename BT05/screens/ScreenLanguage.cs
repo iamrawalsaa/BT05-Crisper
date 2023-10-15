@@ -134,14 +134,24 @@ namespace screens
 
             _language = Language.none;
 
-            if (_arrowRotation < -Math.PI/8) { 
-                _language = Language.hindi; 
+            _language = GameManager.Instance.Language;
+            if (_language == Language.hindi)
+            {
+                _arrowRotation = (float)(-Math.PI / 4);
             }
 
-            if (_arrowRotation > Math.PI/8) { 
-                _language = Language.english; 
+            if (_language == Language.english)
+            {
+                _arrowRotation = (float)(Math.PI / 4);
             }
 
+            //if (_arrowRotation < -Math.PI/8) { 
+            //    _language = Language.hindi; 
+            //}
+
+            //if (_arrowRotation > Math.PI/8) { 
+            //    _language = Language.english; 
+            //}
 
             switch (_language)
             {
@@ -204,8 +214,6 @@ namespace screens
 
         public override void DrawInner(GameTime gameTime)
         {
-            //Rectangle animScreenRect = new Rectangle(1700, 540, 200, 200);
-            //DrawSpriteSheetAnim(_animLooping, animScreenRect, -90);
 
             base.DrawInner(gameTime);
         }

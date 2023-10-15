@@ -48,12 +48,12 @@ namespace screens
             _defaultAnimation.Hide();
             //_leavingToNextState = false;
             _changeTime = 3.0f;
-            _totalTime = 10.0f;
+            _totalTime = 8.0f;
             _levelPhase = LevelSelectionPhases.RandomlyShowAll;
             _levelChosen = false;
             _firstShown = false;
 
-            PrimaryText = "{{HOT_PINK}}Randomly choosing your level!";
+            PrimaryText = "{{HOT_PINK}}Randomly choosing your challenge!";
             SecondaryText = "";// "{{WHITE}}Skip to level with keys:\n1. SickleCell\n2. CowMethane\n3. Wheat\n4. Mosquito\n5. HeartDisease";
 
             _targetLevel = LevelDatabase.Instance.GetRandomLevelOfDifficulty(GameManager.Instance.GameDifficulty);
@@ -168,6 +168,13 @@ namespace screens
         {
             DisplaySecondScreenBackground();
 
+            if (_levelPhase == LevelSelectionPhases.EndResult)
+            {
+                if (_defaultAnimation != null)
+                {
+                    _defaultAnimation.DrawSpriteSheetAnim();
+                }
+            }
             base.DrawSecondScreenInner(gameTime);
         }
 

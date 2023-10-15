@@ -9,9 +9,11 @@ using screens;
 using shared;
 using SharpDX.Direct2D1;
 using SharpDX.Direct3D11;
+using SharpDX.Direct3D9;
 using SharpDX.XAudio2;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SharedMonoGame
 {
@@ -394,7 +396,7 @@ namespace SharedMonoGame
 
         private void DrawBackground()
         {
-            Game._spriteBatch.Draw(SharedAssetManager.Instance.GetBackground(_phase), Vector2.Zero, Microsoft.Xna.Framework.Color.White);
+            Game._spriteBatch.Draw(SharedAssetManager.Instance.GetBackground(_phase, GameManager.Instance.Language), Vector2.Zero, Microsoft.Xna.Framework.Color.White);
         }
 
         /// <summary>
@@ -663,10 +665,33 @@ namespace SharedMonoGame
             //Game._spriteBatch.Draw(SharedAssetManager.Instance.Missing, new Rectangle(0, 0, 50, 1280), Color.Green);
             //Game._spriteBatch.Draw(SharedAssetManager.Instance.Missing, new Rectangle(700, 0, 20, 1280), Color.Blue);
 
+            if (_writeNextFrameToDisk)
+            {
+                _writeNextFrameToDisk = false;
 
+                var dateTimeNow = DateTime.Now;
+                string timestamp = dateTimeNow.ToString("yyMMdd_HHmmss");
+
+                //save to disk 
+                Stream stream = File.OpenWrite(timestamp + "_" + Phase + "_primary_"+ GameManager.Instance.Language+".png");
+                _renderTarget.SaveAsPng(stream, _renderTarget.Width, _renderTarget.Height);
+                stream.Dispose();
+
+                Stream stream2 = File.OpenWrite(timestamp + "_" + Phase + "_secondary_"+ GameManager.Instance.Language + ".png");
+                _renderTargetSecondScreen.SaveAsPng(stream2, _renderTargetSecondScreen.Width, _renderTargetSecondScreen.Height);
+                stream2.Dispose();
+
+            }
 
 
             Game._spriteBatch.End();
+        }
+
+        bool _writeNextFrameToDisk = false;
+
+        public void WriteNextFrameToDisk()
+        {
+            _writeNextFrameToDisk = true;
         }
 
         private void DrawToRenderTarget(GameTime gameTime)
@@ -740,7 +765,7 @@ namespace SharedMonoGame
         {
             Rectangle rect = new Rectangle(0, 0, 1920, 1080);
 
-            var background = SharedAssetManager.Instance.GetBackgroundSecondScreen(Phase);
+            var background = SharedAssetManager.Instance.GetBackgroundSecondScreen(Phase,GameManager.Instance.Language);
             if (background != null)
             {
                 Game._spriteBatch.Draw(background, rect, Color.White);

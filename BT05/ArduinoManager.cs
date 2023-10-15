@@ -1,4 +1,5 @@
-﻿using SharedMonoGame;
+﻿using screens;
+using SharedMonoGame;
 using System;
 using System.Collections.Generic;
 using System.IO.Ports;
@@ -18,16 +19,51 @@ namespace BT05
         public static ArduinoManager Instance { get {  return _instance; } }
 
         bool _scissorClosed = false;
+        Language _language = Language.english;
 
         object _scissorLock = new object();
         object _rotationLock = new object();
+        object _languageLock = new object();
+
+        public Language Lang
+        {
+            get { 
+                Language lang = Language.none;
+                lock(_languageLock)
+                {
+                    lang = _language;
+                }
+
+                return lang; 
+            
+            }
+
+            set {
+                lock (_languageLock)
+                {
+                    bool hasChanged = false;
+                    Language newValue = value;
+
+                    if (_language != newValue)
+                    {
+                        hasChanged = true;
+                        _language = newValue;
+                    }
+
+                    if (hasChanged)
+                    {
+                        GameManager.Instance.LanguageChangedByArduino(newValue);
+                    }
+                }
+            }
+        }
 
         public bool IsScissorOpen
         {
             get
             {
                 // you probably don't need to lock a bool - but let's be on the safe side
-                bool scissorClosed = _scissorClosed;
+                bool scissorClosed = false;
                 lock (_scissorLock)
                 {
                     scissorClosed = _scissorClosed;
@@ -42,7 +78,7 @@ namespace BT05
             get
             {
                 // you probably don't need to lock a bool - but let's be on the safe side
-                bool scissorClosed = _scissorClosed;
+                bool scissorClosed = false;
                 lock (_scissorLock)
                 {
                     scissorClosed = _scissorClosed;
@@ -189,6 +225,21 @@ namespace BT05
                     if (string.Compare(command, "WAVE", true) == 0)
                     {
                         MyScreenManager.Instance.CurrentScreen.WaveHappened();
+                    }
+
+                    if (string.Compare(command, "LANGUAGE", true) == 0)
+                    {
+                        if (string.Compare(parameter, "ENGLISH", true) == 0)
+                        {
+                            Language lang = Language.english;
+                            _language = lang;
+                        }
+
+                        if (string.Compare(parameter, "HINDI", true) == 0)
+                        {
+                            Language lang = Language.hindi;
+                            _language = lang;
+                        }
                     }
                 }
                 else

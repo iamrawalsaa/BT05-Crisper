@@ -108,12 +108,14 @@ namespace BT05
                     screenPrototype.PrimaryText = "Version: 2.01\n\n{{WHITE}}This is a playable version of BT05.\nThis runs across two screens.\nAll graphical content has been made by John\nIt requires input from Third Space on the text content & Bakarmax on the graphics\n{{RED}}See printed instructions.";
                     screenPrototype.SecondaryText = "{{WHITE}}Keys\n{{BLUE}}Enter: {{WHITE}}jump to next state\n{{BLUE}}G:{{WHITE}} Large Window\n{{BLUE}}F:{{WHITE}} Fullscreen\n{{BLUE}}V:{{WHITE}} Dual screen mode\n{{BLUE}}W:{{WHITE}} Wave";
 
+                    //screenPrototype.PrimaryText = "";// "{{WHITE}}Selecting RANDOM {{HOT_PINK}}challenge{{WHITE}} on partner's screen.\n\nYou partner will describe the challenge {{BLUE}}ICON{{WHITE}} to you.  Look up the {{GREEN}}DNA{{WHITE}} sequence.\n\nYou need the opposing sequence.\nIt can be helpful to build it to help you remember.";
+                    //screenPrototype.SecondaryText = "";// "{{WHITE}}Keys\n{{BLUE}}Enter: {{WHITE}}jump to next state\n{{BLUE}}G:{{WHITE}} Large Window\n{{BLUE}}F:{{WHITE}} Fullscreen\n{{BLUE}}V:{{WHITE}} Dual screen mode\n{{BLUE}}W:{{WHITE}} Wave";
+
                     screenPrototype.PrimaryTextOrientation = ScreenOrientation.Portrait;
                     screenPrototype.SecondaryTextOrientation = ScreenOrientation.Portrait;
 
                     screenPrototype.PrimaryTextOffset = new Vector2(100, 0);
                     screenPrototype.SecondaryTextOffset = new Vector2(-200, 0);
-
 
                     break;
                 case GamePhase.ATTRACT:
@@ -141,15 +143,15 @@ namespace BT05
 
                     screenLanguage.PrimaryTextOrientation = ScreenOrientation.Portrait;
                     screenLanguage.SecondaryTextOrientation = ScreenOrientation.Portrait;
-                    screenLanguage.PrimaryText = "{{WHITE}}Turn rope to choose language\n\nभाषा चुनने के लिए रस्सी घुमाएँ";
-                    screenLanguage.SecondaryText = "{{WHITE}}Operate scissors to select";
+                    screenLanguage.PrimaryText = "{{WHITE}}Turn knob to choose language\n\nभाषा चुनने के लिए रस्सी घुमाएँ";
+                    screenLanguage.SecondaryText = "{{WHITE}}Operate scissors with partner to select";
 
                     break;
                 case GamePhase.INSTRUCTIONS:
                     ScreenInstructions screenInstructions = MyScreenManager.Instance.GetScreen(GamePhase.INSTRUCTIONS) as ScreenInstructions;
 
-                    screenInstructions.PrimaryText = "{{WHITE}}You play the role of a {{GREEN}}CAS9{{WHITE}} Protein.\n\n{{GREEN}}CAS9{{WHITE}} can be used to knock out genes\n\n{{GREEN}}CAS9{{WHITE}}:\n{{RED}}1. {{YELLOW}}Unravels{{WHITE}} DNA into single strands\n{{RED}}2. {{WHITE}}Looks for a piece of {{YELLOW}}matching{{WHITE}} DNA\n{{RED}}3. {{YELLOW}}Cuts {{WHITE}}it.\n\nThis causes the cell to repair it's DNA with different pieces - rendering the sequence knocked out.";
-                    screenInstructions.SecondaryText = "{{WHITE}}Read more about how CAS9 works in the other exhibits.\n";
+                    screenInstructions.PrimaryText = "";// {{WHITE}}You play the role of a {{GREEN}}CAS9{{WHITE}} Protein.\n\n{{GREEN}}CAS9{{WHITE}} can be used to knock out genes\n\n{{GREEN}}CAS9{{WHITE}}:\n{{RED}}1. {{YELLOW}}Unravels{{WHITE}} DNA into single strands\n{{RED}}2. {{WHITE}}Looks for a piece of {{YELLOW}}matching{{WHITE}} DNA\n{{RED}}3. {{YELLOW}}Cuts {{WHITE}}it.\n\nThis causes the cell to repair it's DNA with different pieces - rendering the sequence knocked out.";
+                    screenInstructions.SecondaryText = "";// {{WHITE}}Read more about how CAS9 works in the other exhibits.\n";
 
                     screenInstructions.PrimaryTextWidth = 40;
                     screenInstructions.SecondaryTextWidth = 30;
@@ -162,7 +164,11 @@ namespace BT05
                 case GamePhase.HOWTOPLAY:
                     ScreenHowToPlay screenHowToPlay = MyScreenManager.Instance.GetScreen(GamePhase.HOWTOPLAY) as ScreenHowToPlay;
                     screenHowToPlay.PrimaryTextOffset = new Vector2(400, 0);
-                    screenHowToPlay.PrimaryText = "{{GREEN}}HOW TO PLAY (SINGLE SCREEN)\n\n{{WHITE}}P1 (can't see screen): pulls the DNA through (using the mouse)\n\nP2: looks at the screen and says when a {{HOT_PINK}}PINK PAM{{WHITE}} marker is aligned\n\nTogether: decide if the RNA sequence matches\n\nIf they match then operate scissors\nIf not, move to next PAM marker";
+                    //screenHowToPlay.PrimaryText = "{{GREEN}}HOW TO PLAY (SINGLE SCREEN)\n\n{{WHITE}}P1 (can't see screen): pulls the DNA through (using the mouse)\n\nP2: looks at the screen and says when a {{HOT_PINK}}PINK PAM{{WHITE}} marker is aligned\n\nTogether: decide if the RNA sequence matches\n\nIf they match then operate scissors\nIf not, move to next PAM marker";
+                    //screenHowToPlay.PrimaryText = "{{GREEN}}A two player collaborate game\n\n{{WHITE}}You are the EYES\nYour partner has the CONTROLS\n\nGive your partner instructions to align the {{HOT_PINK}}PINK PAM{{WHITE}} marker\n\nTogether you must decide if the RNA sequence matches\n\nIf this is the matching sequence then CUT with the {{BLUE}}CRISPR{{WHITE}} 'genetic scissors'\nIf not, move to next {{HOT_PINK}}PAM{{WHITE}} marker\n\n{{RED}}You will face {{WHITE}}3{{RED}} challenges";
+                    //screenHowToPlay.PrimaryText = "{{GREEN}}A two player collaborate game\n\n{{WHITE}}You have the CONTROLS\nYour partner will be your EYES\n\nListen to your partner's instructions to align the {{HOT_PINK}}PINK PAM{{WHITE}} marker\n\nYou must decide if the sequence on your partner's screen matches your RNA sequence\n\nIf this is the matching sequence then CUT with the {{BLUE}}CRISPR{{WHITE}} 'genetic scissors'\nIf not, move to next {{HOT_PINK}}PAM{{WHITE}} marker\n\n{{RED}}You will face {{WHITE}}3{{RED}} challenges";
+                    screenHowToPlay.PrimaryText = "";
+
                     //screenHowToPlay.SecondaryText = "{{BLACK}}Read more about how CAS9 works in the other exhibits.\n";
 
                     screenHowToPlay.PrimaryTextOrientation = ScreenOrientation.Portrait;
@@ -181,7 +187,6 @@ namespace BT05
 
                     screenGame.PrimaryTextOrientation = ScreenOrientation.Portrait;
                     screenGame.SecondaryTextOrientation = ScreenOrientation.Portrait;
-
 
                     break;
                 case GamePhase.RESULT:
@@ -203,8 +208,11 @@ namespace BT05
                 case GamePhase.THANKS:
                     ScreenThanks screenThanks = MyScreenManager.Instance.GetScreen(GamePhase.THANKS) as ScreenThanks;
 
-                    screenThanks.PrimaryText = "{{WHITE}}You've played the role of a CAS9 protein used for gene editing. This game shows you a simplified view of this incredible process. CAS9 is at the cutting edge of gene editing. You can learn more in the other exhibits.";
-                    screenThanks.SecondaryText = "{{BLUE}}Thanks for playing\n";
+                    // screenThanks.PrimaryText = "{{WHITE}}You've played the role of a CAS9 protein used for gene editing. This game shows you a simplified view of this incredible process. CRISPR CAS9 is at the cutting edge of gene editing. You can learn more in the other exhibits in the BioTech Zone.";
+                    // screenThanks.SecondaryText = "{{BLUE}}Thanks for playing\n";
+
+                    screenThanks.PrimaryText = "";
+                    screenThanks.SecondaryText = "";
 
                     screenThanks.PrimaryTextOrientation = ScreenOrientation.Portrait;
                     screenThanks.SecondaryTextOrientation = ScreenOrientation.Portrait;
@@ -238,5 +246,13 @@ namespace BT05
             } while (_level == newLevel);
             _level = newLevel;
         }
+
+        /// <summary>
+        /// TODO: probably need to update this
+        /// </summary>
+        /// <param name="newValue"></param>
+        public void LanguageChangedByArduino(Language newValue)
+        {
+            Language = newValue;
+        }
     }
-}
