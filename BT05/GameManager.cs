@@ -68,12 +68,13 @@ namespace BT05
         }
 
 
-        public void NextGameState()
+        public void NextGameState(GamePhase nextPhase = GamePhase.NONE)
         {
             GamePhase next = GamePhase.NONE;
-            if (_phase == GamePhase.THANKS)
+            
+            if (nextPhase != GamePhase.NONE)
             {
-                next = GamePhase.ATTRACT;
+                next = nextPhase;
             }
             else
             {
@@ -102,8 +103,8 @@ namespace BT05
                 case GamePhase.PROTOTYPEMESSAGES:
                     ScreenPrototypeMessages screenPrototype = MyScreenManager.Instance.GetScreen(GamePhase.PROTOTYPEMESSAGES) as ScreenPrototypeMessages;
 
-                    screenPrototype.PrimaryText = "Version: 2.01\n\n{{WHITE}}This is a playable version of BT05.\nThis runs across two screens.\nAll graphical content has been made by John\nIt requires input from Third Space on the text content & Bakarmax on the graphics\n{{RED}}See printed instructions.";
-                    screenPrototype.SecondaryText = "{{WHITE}}Keys\n{{BLUE}}Enter: {{WHITE}}jump to next state\n{{BLUE}}G:{{WHITE}} Large Window\n{{BLUE}}F:{{WHITE}} Fullscreen\n{{BLUE}}V:{{WHITE}} Dual screen mode\n{{BLUE}}W:{{WHITE}} Wave";
+                    screenPrototype.PrimaryText = "{{HOT_PINK}}Version: 2.05 16th Oct 2023\n\n{{WHITE}}This is a playable version of BT05.\nThis runs across two screens.\nIt requires input from Third Space on the text content & Bakarmax on the graphics\n";
+                    screenPrototype.SecondaryText = "{{HOT_PINK}}Keys\n{{BLUE}}Enter: {{WHITE}}jump to next state\n{{BLUE}}G:{{WHITE}} Large Window\n{{BLUE}}F:{{WHITE}} Fullscreen\n{{BLUE}}V:{{WHITE}} Dual screen mode\n{{BLUE}}M:{{WHITE}} Mini screens (dual screen mode)\n{{BLUE}}B:{{WHITE}} Swap screens (dual screen mode)\n{{BLUE}}W:{{WHITE}} Wave\n{{BLUE}}N:{{WHITE}} Toggle mouse in Game Mode\n{{BLUE}}";
 
                     //screenPrototype.PrimaryText = "";// "{{WHITE}}Selecting RANDOM {{HOT_PINK}}challenge{{WHITE}} on partner's screen.\n\nYou partner will describe the challenge {{BLUE}}ICON{{WHITE}} to you.  Look up the {{GREEN}}DNA{{WHITE}} sequence.\n\nYou need the opposing sequence.\nIt can be helpful to build it to help you remember.";
                     //screenPrototype.SecondaryText = "";// "{{WHITE}}Keys\n{{BLUE}}Enter: {{WHITE}}jump to next state\n{{BLUE}}G:{{WHITE}} Large Window\n{{BLUE}}F:{{WHITE}} Fullscreen\n{{BLUE}}V:{{WHITE}} Dual screen mode\n{{BLUE}}W:{{WHITE}} Wave";
@@ -112,7 +113,7 @@ namespace BT05
                     screenPrototype.SecondaryTextOrientation = ScreenOrientation.Portrait;
 
                     screenPrototype.PrimaryTextOffset = new Vector2(100, 0);
-                    screenPrototype.SecondaryTextOffset = new Vector2(-200, 0);
+                    screenPrototype.SecondaryTextOffset = new Vector2(-300, 0);
 
                     break;
                 case GamePhase.ATTRACT:
@@ -251,6 +252,11 @@ namespace BT05
         public void LanguageChangedByArduino(Language newValue)
         {
             Language = newValue;
+        }
+
+        internal void NextGameState(object nextPhase)
+        {
+            throw new NotImplementedException();
         }
     }
 }

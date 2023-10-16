@@ -40,7 +40,7 @@ namespace screens
         private void DrawScore()
         {
             Vector2 screenCentre = new Vector2(1920 / 2, 1080 / 2);
-            Game._spriteBatch.DrawTextCentered(SharedAssetManager.Instance.FontConsole, ChallengeManager.Instance.ResultsString(), screenCentre, -90, ChallengeManager.Instance.ScoreColour());
+            Game._spriteBatch.DrawTextCentered(SharedAssetManager.Instance.FontTimer, ChallengeManager.Instance.ResultsString(), screenCentre, -90, ChallengeManager.Instance.ScoreColour());
         }
 
         public override void DrawSecondScreenInner(GameTime gameTime)

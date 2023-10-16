@@ -13,10 +13,15 @@ namespace screens
 {
     public class ScreenThanks : GameScreenExtended
     {
-        private float _timeInState;
-        private bool _leavingToNextState;
+        public ScreenThanks(MyGameBase game, shared.GamePhase phase) : base(game, phase) {
+            _advanceModeSet = ScreenAdvanceMode.ADVANCE_TIMER;
+            _advanceModeTime = 10.0f;
 
-        public ScreenThanks(MyGameBase game, shared.GamePhase phase) : base(game, phase) { }
+            Rectangle animScreenRect = new Rectangle(1700, 540, 200, 200);
+            _defaultAnimation = new OnScreenAnimation(Game, "circlefill", animScreenRect, -90, 10, AnimationType.ONCE);
+
+            _nextPhase = GamePhase.ATTRACT;
+        }
 
         public override void LoadContent()
         {
@@ -33,24 +38,24 @@ namespace screens
             ShowPrimaryText = true;
             ShowSecondaryText = true;
 
-            _timeInState = 3.0f;
-            _leavingToNextState = false;
+            //_timeInState = 3.0f;
+            //_leavingToNextState = false;
         }
 
         public override void Update(GameTime gameTime)
         {
             UpdateDrawables(gameTime);
 
-            _timeInState -= gameTime.GetElapsedSeconds();
+            //_timeInState -= gameTime.GetElapsedSeconds();
 
-            if (_timeInState < 0)
-            {
-                if (!_leavingToNextState)
-                {
-                    _leavingToNextState = true;
-                    GameManager.Instance.GotoPhase(GamePhase.ATTRACT);
-                }
-            }
+            //if (_timeInState < 0)
+            //{
+            //    if (!_leavingToNextState)
+            //    {
+            //        _leavingToNextState = true;
+            //        GameManager.Instance.GotoPhase(GamePhase.ATTRACT);
+            //    }
+            //}
 
             base.Update(gameTime);
         }
@@ -58,6 +63,11 @@ namespace screens
         public override void DrawSecondScreenInner(GameTime gameTime)
         {
             DisplaySecondScreenBackground();
+
+            if (_defaultAnimation != null)
+            {
+                _defaultAnimation.DrawSpriteSheetAnim();
+            }
 
             base.DrawSecondScreenInner(gameTime);
         }

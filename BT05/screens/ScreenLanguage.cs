@@ -82,13 +82,13 @@ namespace screens
             if(_language == Language.english)
             {
                 GameManager.Instance.Language = Language.english;
-                GameManager.Instance.NextGameState();
+                GameManager.Instance.NextGameState(_nextPhase);
             }
 
             if(_language== Language.hindi)
             {
                 GameManager.Instance.Language = Language.hindi;
-                GameManager.Instance.NextGameState();
+                GameManager.Instance.NextGameState(_nextPhase);
             }
         }
 

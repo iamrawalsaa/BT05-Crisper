@@ -51,10 +51,6 @@ namespace screens
         public override void DrawInner(GameTime gameTime)
         {
 
-            Vector2 screenCentre = new Vector2(1920 / 2, 1080 / 2);
-            Game._spriteBatch.DrawTextCentered(SharedAssetManager.Instance.FontTimer, ChallengeManager.Instance.ResultsString(), screenCentre, -90, ChallengeManager.Instance.ScoreColour());
-
-
             base.DrawInner(gameTime);
         }
     }

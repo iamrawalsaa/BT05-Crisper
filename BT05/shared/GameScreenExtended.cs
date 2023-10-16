@@ -34,6 +34,8 @@ namespace SharedMonoGame
 
         private bool _isWaveValid = false; // prevent wave for 2-3 seconds
 
+        protected GamePhase _nextPhase = GamePhase.NONE;
+
         protected new MyGameBase Game => (MyGameBase)base.Game;
         GamePhase _phase = GamePhase.NONE;
 
@@ -207,6 +209,8 @@ namespace SharedMonoGame
                 _secondaryTextureNeedsReCreating = true;
             }
         }
+
+        public GamePhase NextPhase { get { return _nextPhase; } }
 
         protected void CheckTextureNeedsRecreating()
         {
@@ -446,7 +450,7 @@ namespace SharedMonoGame
 
                     if ( _advanceModeTimer <= 0 )
                     {
-                        GameManager.Instance.NextGameState();
+                        GameManager.Instance.NextGameState(_nextPhase);
                     }
                 }
             }
@@ -537,7 +541,7 @@ namespace SharedMonoGame
         {
             if (_isWaveValid && _advanceMode == ScreenAdvanceMode.ADVANCE_WAVE)
             {
-                GameManager.Instance.NextGameState();
+                GameManager.Instance.NextGameState(_nextPhase);
             }
         }
 

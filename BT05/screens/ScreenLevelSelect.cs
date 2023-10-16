@@ -119,7 +119,7 @@ namespace screens
                 case LevelSelectionPhases.EndResult:
                     if (_totalTime < -5.0f)
                     {
-                        GameManager.Instance.NextGameState();
+                        GameManager.Instance.NextGameState(_nextPhase);
                         _levelPhase = LevelSelectionPhases.TransitioningToNextPhase;
                     }
                     break;

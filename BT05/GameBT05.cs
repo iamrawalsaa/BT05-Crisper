@@ -123,17 +123,24 @@ namespace BT05
 
         private static void MouseAndKeyboard_Scissors()
         {
+            // Note: I had this game as two sensors for the scissors
+            //       This was changed by the hardware people
+
             Keys scissorsLeft = Keys.Z;
             Keys scissorsRight = Keys.X;
+            Keys scissorsBoth = Keys.S;
 
             bool leftDown = Keyboard.GetState().IsKeyDown(scissorsLeft);
             bool rightDown = Keyboard.GetState().IsKeyDown(scissorsRight) || Mouse.GetState().RightButton == ButtonState.Pressed;
+
+            bool scissorsOverride = Keyboard.GetState().IsKeyDown(scissorsBoth);
+
 
             ScreenGame screenGame = MyScreenManager.Instance.CurrentScreen as ScreenGame;
 
             if (screenGame != null)
             {
-                if (leftDown && rightDown)
+                if (leftDown && rightDown || scissorsOverride)
                 {
                     screenGame.ScissorsClosed();
                 }
@@ -148,12 +155,17 @@ namespace BT05
                         screenGame.OneSideClosed();
                     }
                 }
+
+                //if (scissorsOverride)
+                //{
+                //    screenGame.ScissorsClosed();
+                //}
             }
 
             ScreenLanguage screenLanguage = MyScreenManager.Instance.CurrentScreen as ScreenLanguage;
             if (screenLanguage != null)
             {
-                if (leftDown && rightDown)
+                if (leftDown && rightDown || scissorsOverride)
                 {
                     screenLanguage.ScissorsClosed();
                 }
@@ -168,6 +180,11 @@ namespace BT05
                         screenLanguage.OneSideClosed();
                     }
                 }
+
+                //if (scissorsOverride)
+                //{
+                //    screenLanguage.ScissorsClosed();
+                //}
             }
         }
 
@@ -317,7 +334,7 @@ namespace BT05
 
             if (JustPressed(Keys.Enter))
             {
-                GameManager.Instance.NextGameState();
+                GameManager.Instance.NextGameState(MyScreenManager.Instance.CurrentScreen.NextPhase);
             }
 
             KeyPressesMainGame();
@@ -421,7 +438,7 @@ namespace BT05
 
                 if (JustPressed(Keys.S))
                 {
-                    screenGame.SpreadHorizontally();
+                //    screenGame.SpreadHorizontally();
                 }
 
                 if (JustPressed(Keys.L))

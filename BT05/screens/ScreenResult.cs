@@ -82,7 +82,7 @@ namespace screens
                     //if (GameManager.Instance.Turns > 3)
                     if (ChallengeManager.Instance.IsFinalChallenge())
                     {
-                        GameManager.Instance.NextGameState();
+                        GameManager.Instance.NextGameState(_nextPhase);
                     }
                     else
                     {
@@ -98,10 +98,16 @@ namespace screens
         {
             DisplaySecondScreenBackground();
 
+            DrawVideoFrame();
             base.DrawSecondScreenInner(gameTime);
         }
 
         public override void DrawInner(GameTime gameTime)
+        {
+            DrawVideoFrame();
+        }
+
+        private void DrawVideoFrame()
         {
             var texture = VideoManager.Instance.GetVideoTexture();
 

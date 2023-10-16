@@ -7,6 +7,7 @@ using shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -148,6 +149,8 @@ namespace screens
             SecondaryTextOffset = new Vector2(50, 200);
             SecondaryTextWidth = 25;
             SecondaryText = "CAS9 Scissors Cut the Double Helix";
+
+            _animationPlaying = true;
         }
 
         private void Begin_CutAnim_DNABreaks()
@@ -365,7 +368,7 @@ namespace screens
         void GotoNextState()
         {
             //ChallengeManager.Instance.CurrentLevelSuccess = _showOverlaySuccess;
-            GameManager.Instance.NextGameState();
+            GameManager.Instance.NextGameState(_nextPhase);
         }
 
         public void ScissorCut_callback()

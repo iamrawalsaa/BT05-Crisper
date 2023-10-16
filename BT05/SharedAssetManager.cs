@@ -17,6 +17,17 @@ using System.Xml.Linq;
 
 namespace BT05
 {
+    public enum GameOverlays
+    {
+        none,
+        actual,
+        cut,
+        damaged,
+        find,
+        knock,
+        max
+    }
+
     public sealed class SharedAssetManager : AssetManagerBase
     {
         Random _random = new Random();
@@ -31,6 +42,9 @@ namespace BT05
 
         Dictionary<GamePhase, Texture2D> _backgroundsSecondScreenHindi = new Dictionary<GamePhase, Texture2D>();
         Dictionary<GamePhase, Texture2D> _backgroundsHindi = new Dictionary<GamePhase, Texture2D>();
+
+        Dictionary<GameOverlays, Texture2D> _gameOverlaysEnglish = new Dictionary<GameOverlays, Texture2D>();
+        Dictionary<GameOverlays, Texture2D> _gameOverlaysHindi = new Dictionary<GameOverlays, Texture2D>();
 
 
         Dictionary<Level, Texture2D> _levelTextures = new Dictionary<Level, Texture2D>();
@@ -86,6 +100,57 @@ namespace BT05
             LoadBackgroundsSecondScreen(game);
             LoadAnimations();
             LoadLevels();
+
+            LoadGameOverlays();
+        }
+
+        /// <summary>
+        /// These are the text overlays converted to graphics so that they can be Hindi
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        private void LoadGameOverlays()
+        {
+            foreach( GameOverlays o in Enum.GetValues(typeof(GameOverlays)))
+            {
+                if ( o != GameOverlays.none && o!= GameOverlays.max )
+                {
+                    string englishTextureName = "gameOverlays\\game_" + o;
+                    string hindiTextureName = "gameOverlays-Hindi\\game_" + o;
+
+                    var textureEnglish = LoadTextureSafe(englishTextureName);
+                    if(textureEnglish != null )
+                    {
+                        _gameOverlaysEnglish.Add(o, textureEnglish);
+                    }
+                    
+                    var textureHindi = LoadTextureSafe(hindiTextureName);
+                    if (textureHindi != null)
+                    {
+                        _gameOverlaysHindi.Add(o, textureHindi);
+                    }
+                }
+            }
+        }
+
+        public Texture2D GetGameOverlay(GameOverlays gameOverlay, Language lang)
+        {
+            if (lang == Language.english)
+            {
+                if (_gameOverlaysEnglish.ContainsKey(gameOverlay))
+                {
+                    return _gameOverlaysEnglish[gameOverlay];
+                }
+            }
+
+            if (lang == Language.hindi)
+            {
+                if (_gameOverlaysHindi.ContainsKey(gameOverlay))
+                {
+                    return _gameOverlaysHindi[gameOverlay];
+                }
+            }
+
+            return Blank;
         }
 
         private void LoadAnimations()

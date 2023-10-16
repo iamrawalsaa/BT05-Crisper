@@ -21,6 +21,7 @@ using SharpDX.Direct3D9;
 using MonoGame.Extended.Tweening;
 using System.CodeDom.Compiler;
 using SharpDX.MediaFoundation;
+using MonoGame.Extended.Sprites;
 
 namespace screens
 {
@@ -87,6 +88,8 @@ namespace screens
 
         private byte _foregroundAlpha;
 
+        bool _animationPlaying = false;
+
         /// <summary>
         /// This allows incoming movement from the keyboard to be processed
         /// </summary>
@@ -104,6 +107,7 @@ namespace screens
             ShowSecondaryText = false;
             _highlightCorrectAnswerOnSecondScreen = false;
             _movementAllowed = true;
+            _animationPlaying = false;
             //++GameManager.Instance.Turns;
             base.ScreenArriving();
         }
@@ -254,7 +258,7 @@ namespace screens
             _xDiff = Math.Clamp(_xDiff, -maxChange, maxChange);
 
             // This is a bit more challenging to add smoothing to this.
-            if (!_ignoreIncomingRopeData)
+            if (!_ignoreIncomingRopeData && !_animationPlaying)
             {
                 _targetMouseXDiff += _xDiff;
             }
@@ -281,7 +285,7 @@ namespace screens
                 // should find the lowest value and only process that
                 int id = GetLowestNucleotide();
 
-                if (id != -1)
+                if (id != -1 && _nucleotideWalkersLeft.Count>0)
                 {
                     var progress = _nucleotideWalkersLeft[id].GetProgress;
                     if (progress < _minProgress)
@@ -395,7 +399,35 @@ namespace screens
                 }
             }
 
+            ShowGameOverlay();
+
             base.Update(gameTime);
+        }
+
+        GameOverlays _currentGameOverlay = GameOverlays.none;
+
+        /// <summary>
+        /// This is to show text in English and Hindi during the Animation phase
+        /// </summary>
+        private void ShowGameOverlay()
+        {
+            if (_currentGameOverlay != GameOverlays.none)
+            {
+                Texture2D tex = SharedAssetManager.Instance.GetGameOverlay(_currentGameOverlay, GameManager.Instance.Language);
+
+                // Draw at 90 degrees...
+
+                Vector2 origin = new Vector2(tex.Width / 2, tex.Height / 2);
+                Vector2 target = new Vector2();
+
+                // TODO: calculating this...
+
+                float rotation = MathHelper.ToRadians(-90);
+                Game._spriteBatch.Draw(tex, target, null, Microsoft.Xna.Framework.Color.White, rotation, origin, 1.0f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+
+
+
+            }
         }
 
         int _nextNucleotideToDisplay = 0;
@@ -537,7 +569,10 @@ namespace screens
                 DrawMarkers();
             }
 
-            Game._spriteBatch.DrawString(SharedAssetManager.Instance.FontConsole, _debugString, new Vector2(50, 850), Microsoft.Xna.Framework.Color.White);
+            if (DebugOutput.Instance.ShowDebug)
+            {
+                Game._spriteBatch.DrawString(SharedAssetManager.Instance.FontConsole, _debugString, new Vector2(50, 850), Microsoft.Xna.Framework.Color.White);
+            }
         }
 
         private void DrawMarkers()
