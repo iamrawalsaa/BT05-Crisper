@@ -30,7 +30,7 @@ namespace shared
         GAME,                   // the main game
         RESULT,                 // success / failure - goes back to level success
         ENDGAME,                // Result of 3
-        THANKS,                  // thank you for playing
+        THANKS,                 // thank you for playing
         TEST3D
     }
 

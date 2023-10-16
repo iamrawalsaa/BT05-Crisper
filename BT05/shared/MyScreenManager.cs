@@ -51,7 +51,7 @@ namespace SharedMonoGame
             _gameScreens.Add(GamePhase.ATTRACT, new ScreenAttract(game, GamePhase.ATTRACT));
             _gameScreens.Add(GamePhase.LANGUAGE, new ScreenLanguage(game, GamePhase.LANGUAGE));
             _gameScreens.Add(GamePhase.LEVELSELECT, new ScreenLevelSelect(game, GamePhase.LEVELSELECT));
-            _gameScreens.Add(GamePhase.ENDGAME, new ScreenEndGame(game, GamePhase.ENDGAME));
+            _gameScreens.Add(GamePhase.ENDGAME, new ScreenSummaryGame(game, GamePhase.ENDGAME));
             _gameScreens.Add(GamePhase.INSTRUCTIONS, new ScreenInstructions(game, GamePhase.INSTRUCTIONS));
             _gameScreens.Add(GamePhase.HOWTOPLAY, new ScreenHowToPlay(game, GamePhase.HOWTOPLAY));
             _gameScreens.Add(GamePhase.THANKS, new ScreenThanks(game, GamePhase.THANKS));

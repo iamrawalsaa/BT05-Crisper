@@ -254,7 +254,10 @@ namespace screens
             _xDiff = Math.Clamp(_xDiff, -maxChange, maxChange);
 
             // This is a bit more challenging to add smoothing to this.
-            _targetMouseXDiff += _xDiff;
+            if (!_ignoreIncomingRopeData)
+            {
+                _targetMouseXDiff += _xDiff;
+            }
             _targetMouseXDiff = Math.Clamp(_targetMouseXDiff, -maxSpeed, maxSpeed);
             _targetMouseXDiff *= 0.85f;
 
@@ -416,7 +419,11 @@ namespace screens
                     _timeToDisplayNextNucleotide = 0.1f;
                 }
             }
+
+            _ignoreIncomingRopeData = (_nextNucleotideToDisplay < _nucleotideWalkersLeft.Count);
         }
+
+        bool _ignoreIncomingRopeData = false;
 
         /// <summary>
         /// This is used to look for the bug between the on-screen and complete list

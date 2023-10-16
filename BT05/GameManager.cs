@@ -197,7 +197,7 @@ namespace BT05
                     break;
                 case GamePhase.ENDGAME:
 
-                    ScreenEndGame screenEndGame = MyScreenManager.Instance.GetScreen(GamePhase.ENDGAME) as ScreenEndGame;
+                    ScreenSummaryGame screenEndGame = MyScreenManager.Instance.GetScreen(GamePhase.ENDGAME) as ScreenSummaryGame;
 
                     screenEndGame.PrimaryTextOrientation = ScreenOrientation.Portrait;
                     screenEndGame.SecondaryTextOrientation = ScreenOrientation.Portrait;

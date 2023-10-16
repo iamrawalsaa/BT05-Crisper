@@ -44,6 +44,19 @@ namespace SharedMonoGame
             sprite.DrawString(font, text, position - offset, color);
         }
 
+        public static void DrawTextCentered(this SpriteBatch sprite, SpriteFont font, string text, Vector2 position, float degrees, Color color)
+        {
+            float rotation = MathHelper.ToRadians(degrees);
+
+            Vector2 offset = font.MeasureString(text) / 2;
+            Vector2 origin = font.MeasureString(text) / 2;
+
+            float scale = 1.0f;
+
+            sprite.DrawString(font, text, position - offset, color, rotation, origin, scale, SpriteEffects.None,0f);
+        }
+
+
         /// <summary>
         /// Aspect ratio as a decimal
         /// width:height - e.g 16:9
