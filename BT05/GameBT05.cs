@@ -221,6 +221,11 @@ namespace BT05
                 _showMini = !_showMini;
             }
 
+            if (JustPressed(Keys.N))
+            {
+                _mouseMode = !_mouseMode;
+            }
+
             if (JustPressed(Keys.E))
             {
                 GameManager.Instance.LanguageChangedByArduino(Language.english);

@@ -46,6 +46,7 @@ namespace screens
         public override void ScreenArriving()
         {
             _defaultAnimation.Hide();
+            _defaultAnimation.Reset();
             //_leavingToNextState = false;
             _changeTime = 3.0f;
             _totalTime = 8.0f;
@@ -53,7 +54,7 @@ namespace screens
             _levelChosen = false;
             _firstShown = false;
 
-            PrimaryText = "{{HOT_PINK}}Randomly choosing your challenge!";
+            PrimaryText = "";// "{{HOT_PINK}}Randomly choosing your challenge!";
             SecondaryText = "";// "{{WHITE}}Skip to level with keys:\n1. SickleCell\n2. CowMethane\n3. Wheat\n4. Mosquito\n5. HeartDisease";
 
             _targetLevel = LevelDatabase.Instance.GetRandomLevelOfDifficulty(GameManager.Instance.GameDifficulty);
@@ -93,6 +94,7 @@ namespace screens
                     if (GameManager.Instance.Level == _targetLevel)
                     {
                         _levelPhase = LevelSelectionPhases.EndResult;
+                        _defaultAnimation.Reset();
                         _defaultAnimation.Play();
                         _defaultAnimation.Show();
                         LevelHasBeenChosen();
@@ -208,9 +210,19 @@ namespace screens
         /// <param name="sickleCell"></param>
         public void ChooseLevel(Level newLevel)
         {
+            _targetLevel = newLevel;
             GameManager.Instance.Level = newLevel;
-            _totalTime = 0;
             LevelHasBeenChosen();
+
+            _levelPhase = LevelSelectionPhases.EndResult;
+            _defaultAnimation.Reset();
+            _defaultAnimation.Play();
+            _defaultAnimation.Show();
+            
+            SoundEffectManager.Instance.PlaySound(SoundEffectEnum.LEVEL_SELECT_CHOSEN);
+
+            _totalTime = 5.0f;
+            _levelChosen = true;
         }
     }
 }

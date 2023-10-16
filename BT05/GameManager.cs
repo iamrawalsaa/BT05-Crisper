@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace BT05
 {
-
     public sealed class GameManager
     {
         GameDifficulty _gameDifficulty = GameDifficulty.easy;
@@ -45,11 +44,14 @@ namespace BT05
         public int Turns { get; internal set; } = 0;
 
         bool _lastRoundWinnder = false;
-        public bool LastRoundWinner {
+        public bool LastRoundWinner
+        {
             get { return _lastRoundWinnder; }
-            set { _lastRoundWinnder = value;
+            set
+            {
+                _lastRoundWinnder = value;
                 DebugOutput.Instance.WriteInfo("Last Round Winner: " + _lastRoundWinnder);
-            } 
+            }
         }
 
         Language _language = Language.english;
@@ -69,7 +71,7 @@ namespace BT05
             _gameDifficulty = GameDifficulty.easy;
         }
 
-        
+
 
         public void NextGameState()
         {
@@ -256,3 +258,4 @@ namespace BT05
             Language = newValue;
         }
     }
+}

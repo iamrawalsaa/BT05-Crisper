@@ -16,8 +16,13 @@ namespace screens
         private float _timeInState;
         private bool _leavingToNextState = false;
 
+        public ScreenResult(MyGameBase game, shared.GamePhase phase) : base(game, phase) {
+            //_advanceModeSet = ScreenAdvanceMode.ADVANCE_TIMER;
+            //_advanceModeTime = 10.0f;
 
-        public ScreenResult(MyGameBase game, shared.GamePhase phase) : base(game, phase) { }
+            Rectangle animScreenRect = new Rectangle(1700, 540, 200, 200);
+            _defaultAnimation = new OnScreenAnimation(Game, "circlefill", animScreenRect, -90, 10, AnimationType.ONCE);
+        }
 
         public override void LoadContent()
         {
@@ -28,17 +33,15 @@ namespace screens
         {
             base.ScreenArriving();
 
-
             if (GameManager.Instance.Turns < 4)
             {
-                PrimaryText = "{{WHITE}}Game " + GameManager.Instance.Turns + " of 3";
-                SecondaryText = "{{GREEN}}Your next turn will start shortly";
-
+                PrimaryText = "{{WHITE}}Challenge " + GameManager.Instance.Turns + " of 3";
+                SecondaryText = "{{GREEN}}Your next challenge will start shortly";
             }
             else
             {
                 PrimaryText = "";
-                SecondaryText = "{{RED}}That was your final go!";
+                SecondaryText = "{{RED}}That was your final challenge!";
             }
 
             if ( GameManager.Instance.LastRoundWinner)
