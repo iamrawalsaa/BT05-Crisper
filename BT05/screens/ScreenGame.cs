@@ -399,7 +399,7 @@ namespace screens
                 }
             }
 
-            ShowGameOverlay();
+            
 
             base.Update(gameTime);
         }
@@ -416,17 +416,12 @@ namespace screens
                 Texture2D tex = SharedAssetManager.Instance.GetGameOverlay(_currentGameOverlay, GameManager.Instance.Language);
 
                 // Draw at 90 degrees...
-
                 Vector2 origin = new Vector2(tex.Width / 2, tex.Height / 2);
-                Vector2 target = new Vector2();
+                Vector2 target = new Vector2(1680,540);
 
                 // TODO: calculating this...
-
                 float rotation = MathHelper.ToRadians(-90);
                 Game._spriteBatch.Draw(tex, target, null, Microsoft.Xna.Framework.Color.White, rotation, origin, 1.0f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
-
-
-
             }
         }
 
@@ -504,8 +499,11 @@ namespace screens
             else
             { 
                 DrawStandard();
-                DrawTextTexture();
+                //DrawTextTexture();
             }
+
+            ShowGameOverlay();
+
             base.DrawSecondScreenInner(gameTime);
         }
 
@@ -514,8 +512,8 @@ namespace screens
         public override void DrawInner(GameTime gameTime)
         {
             DrawStandard();
+            ShowGameOverlay();
             base.DrawInner(gameTime);
-
         }
 
         private void DrawStandard()

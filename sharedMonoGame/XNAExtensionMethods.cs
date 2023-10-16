@@ -53,7 +53,7 @@ namespace SharedMonoGame
 
             float scale = 1.0f;
 
-            sprite.DrawString(font, text, position - offset, color, rotation, origin, scale, SpriteEffects.None,0f);
+            sprite.DrawString(font, text, position, color, rotation, origin, scale, SpriteEffects.None,0f);
         }
 
 

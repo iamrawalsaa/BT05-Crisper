@@ -13,7 +13,7 @@ namespace screens
     {
         public ScreenSummaryGame(MyGameBase game, shared.GamePhase phase) : base(game, phase) {
             _advanceModeSet = ScreenAdvanceMode.ADVANCE_TIMER;
-            _advanceModeTime = 10.0f;
+            _advanceModeTime = 20.0f;
 
             Rectangle animScreenRect = new Rectangle(1700, 540, 200, 200);
             _defaultAnimation = new OnScreenAnimation(Game, "circlefill", animScreenRect, -90, 10, AnimationType.ONCE);

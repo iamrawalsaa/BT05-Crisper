@@ -148,7 +148,9 @@ namespace screens
             SecondaryTextOrientation = ScreenOrientation.Portrait;
             SecondaryTextOffset = new Vector2(50, 200);
             SecondaryTextWidth = 25;
-            SecondaryText = "CAS9 Scissors Cut the Double Helix";
+            //SecondaryText = "CAS9 Scissors Cut the Double Helix";
+            SecondaryText = "";
+            _currentGameOverlay = GameOverlays.cut;
 
             _animationPlaying = true;
         }
@@ -163,7 +165,9 @@ namespace screens
         {
             DebugOutput.Instance.WriteInfo("CutAnim_NucleotidesMoveOff is starting");
             AnimateCutNucleotidesOffScreen();
-            SecondaryText = "Nucleotides are damaged and disappear";
+            //SecondaryText = "Nucleotides are damaged and disappear";
+            SecondaryText = "";
+            _currentGameOverlay = GameOverlays.damaged;
         }
 
         private void Begin_CutAnim_NucleotidesChange()
@@ -176,7 +180,9 @@ namespace screens
         {
             DebugOutput.Instance.WriteInfo("CutAnim_NucleotidesReturn is starting");
             AnimateCutNucloetidesBackOnScreen();
-            SecondaryText = "The cell repairs its own DNA and the gene is 'Knocked Out'";
+            //SecondaryText = "The cell repairs its own DNA and the gene is 'Knocked Out'";
+            SecondaryText = "";
+            _currentGameOverlay = GameOverlays.knock;
 
             // check for correctAnswer
             if (IsCorrectPAMMarker())
@@ -193,6 +199,7 @@ namespace screens
         {
             _showDNABreakScreen = false;
             ShowSecondaryText = false;
+            _currentGameOverlay = GameOverlays.none;
             DebugOutput.Instance.WriteInfo("CutAnim_ShowResultSuccess is starting");
             ChallengeManager.Instance.CurrentLevelSuccess = true;
             ShowSuccessOverlay();
@@ -202,6 +209,8 @@ namespace screens
         {
             _showDNABreakScreen = false;
             ShowSecondaryText = false;
+            _currentGameOverlay = GameOverlays.none;
+
             DebugOutput.Instance.WriteInfo("CutAnim_ShowResultFailure is starting");
             ChallengeManager.Instance.CurrentLevelSuccess = false;
             ShowFailureOverlay();
@@ -216,7 +225,9 @@ namespace screens
             _scissorsComponent.Visible = false;
 
             DebugOutput.Instance.WriteInfo("CutAnim_ShowCorrectPAMPause is starting");
-            SecondaryText = "Let's find the correct sequence";
+            //SecondaryText = "Let's find the correct sequence";
+            SecondaryText = "";
+            _currentGameOverlay = GameOverlays.find;
         }
 
         private void Begin_CutAnim_ShowCorrectPAM()
@@ -231,13 +242,16 @@ namespace screens
         {
             _highlightCorrectAnswerOnSecondScreen = true;
 
-            SecondaryText = "This is the gene you should have knocked out";
+            //SecondaryText = "This is the gene you should have knocked out";
+            _currentGameOverlay = GameOverlays.actual;
         }
 
         private void Begin_CutAnim_Complete()
         {
             DebugOutput.Instance.WriteInfo("CutAnim is complete");
             SecondaryText = "";
+            _currentGameOverlay = GameOverlays.none;
+
             ShowSecondaryText = false;
 
             // Remove PAM Marker
