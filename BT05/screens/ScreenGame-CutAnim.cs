@@ -191,6 +191,7 @@ namespace screens
             _showDNABreakScreen = false;
             ShowSecondaryText = false;
             DebugOutput.Instance.WriteInfo("CutAnim_ShowResultSuccess is starting");
+            ChallengeManager.Instance.CurrentLevelSuccess = true;
             ShowSuccessOverlay();
         }
 
@@ -199,6 +200,7 @@ namespace screens
             _showDNABreakScreen = false;
             ShowSecondaryText = false;
             DebugOutput.Instance.WriteInfo("CutAnim_ShowResultFailure is starting");
+            ChallengeManager.Instance.CurrentLevelSuccess = false;
             ShowFailureOverlay();
             _scissorsComponent.Visible = false;
         }
@@ -362,7 +364,7 @@ namespace screens
 
         void GotoNextState()
         {
-            GameManager.Instance.LastRoundWinner = _showOverlaySuccess;         
+            //ChallengeManager.Instance.CurrentLevelSuccess = _showOverlaySuccess;
             GameManager.Instance.NextGameState();
         }
 

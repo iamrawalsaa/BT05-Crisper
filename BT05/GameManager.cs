@@ -12,14 +12,11 @@ namespace BT05
 {
     public sealed class GameManager
     {
-        GameDifficulty _gameDifficulty = GameDifficulty.easy;
+        //ChallengeDifficulty _gameDifficulty = ChallengeDifficulty.easy;
 
-        public GameDifficulty GameDifficulty { get { return _gameDifficulty; } }
+        //public ChallengeDifficulty GameDifficulty { get { return ChallengeManager.Instance. } }
 
-        public void NextDifficulty()
-        {
-            ++_gameDifficulty;
-        }
+
 
         Random _random = new Random();
 
@@ -30,29 +27,28 @@ namespace BT05
             get { return _instance; }
         }
 
-        Level _level = Level.CowMethane;
+        //Level _level = Level.CowMethane;
         GamePhase _phase = GamePhase.NONE;
 
-        public Level Level
+        public Level CurrentLevel
         {
-            get { return _level; }
-            set { _level = value; }
+            get { return ChallengeManager.Instance.CurrentLevel; }
         }
 
         public GamePhase GamePhase { get { return _phase; } }
 
-        public int Turns { get; internal set; } = 0;
+        //public int Turns { get; internal set; } = 0;
 
-        bool _lastRoundWinnder = false;
-        public bool LastRoundWinner
-        {
-            get { return _lastRoundWinnder; }
-            set
-            {
-                _lastRoundWinnder = value;
-                DebugOutput.Instance.WriteInfo("Last Round Winner: " + _lastRoundWinnder);
-            }
-        }
+        //bool _lastRoundWinnder = false;
+        //public bool LastRoundWinner
+        //{
+        //    get { return _lastRoundWinnder; }
+        //    set
+        //    {
+        //        _lastRoundWinnder = value;
+        //        DebugOutput.Instance.WriteInfo("Last Round Winner: " + _lastRoundWinnder);
+        //    }
+        //}
 
         Language _language = Language.english;
         public Language Language
@@ -67,10 +63,9 @@ namespace BT05
 
         public void ResetGame()
         {
-            Turns = 1;
-            _gameDifficulty = GameDifficulty.easy;
+            //Turns = 1;
+            ChallengeManager.Instance.Reset();
         }
-
 
 
         public void NextGameState()
@@ -245,8 +240,8 @@ namespace BT05
             do
             {
                 newLevel = (Level)_random.Next(1, (int)(Level.MAX_LEVEL));
-            } while (_level == newLevel);
-            _level = newLevel;
+            } while (ChallengeManager.Instance.CurrentLevel == newLevel);
+            ChallengeManager.Instance.CurrentLevel = newLevel;
         }
 
         /// <summary>

@@ -309,7 +309,8 @@ namespace BT05
 
                 if (JustPressed(Keys.OemPipe))
                 {
-                    GameManager.Instance.Level = Level.SickleCell;
+                    ChallengeManager.Instance.JumpToLevel(ChallengeDifficulty.easy, Level.SickleCell);
+                    
                     GameManager.Instance.GotoPhase(GamePhase.GAME);
                 }
             }
@@ -586,27 +587,27 @@ namespace BT05
 
                 if (JustPressed(Keys.D1))
                 {
-                    screenLevelSelect.ChooseLevel(Level.SickleCell);
+                    screenLevelSelect.ChooseLevel_DebugKey(Level.SickleCell);
                 }
 
                 if (JustPressed(Keys.D2))
                 {
-                    screenLevelSelect.ChooseLevel(Level.CowMethane);
+                    screenLevelSelect.ChooseLevel_DebugKey(Level.CowMethane);
                 }
 
                 if (JustPressed(Keys.D3))
                 {
-                    screenLevelSelect.ChooseLevel(Level.Wheat);
+                    screenLevelSelect.ChooseLevel_DebugKey(Level.Wheat);
                 }
 
                 if (JustPressed(Keys.D4))
                 {
-                    screenLevelSelect.ChooseLevel(Level.Mosquito);
+                    screenLevelSelect.ChooseLevel_DebugKey(Level.Mosquito);
                 }
 
                 if (JustPressed(Keys.D5))
                 {
-                    screenLevelSelect.ChooseLevel(Level.HeartDisease);
+                    screenLevelSelect.ChooseLevel_DebugKey(Level.HeartDisease);
                 }
 
 

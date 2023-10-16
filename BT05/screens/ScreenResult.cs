@@ -33,9 +33,10 @@ namespace screens
         {
             base.ScreenArriving();
 
-            if (GameManager.Instance.Turns < 4)
+            //if (GameManager.Instance.Turns < 4)
+            if (!ChallengeManager.Instance.IsFinalChallenge())
             {
-                PrimaryText = "{{WHITE}}Challenge " + GameManager.Instance.Turns + " of 3";
+                PrimaryText = "{{WHITE}}Challenge " + ChallengeManager.Instance.Turns + " of 3";
                 SecondaryText = "{{GREEN}}Your next challenge will start shortly";
             }
             else
@@ -44,7 +45,8 @@ namespace screens
                 SecondaryText = "{{RED}}That was your final challenge!";
             }
 
-            if ( GameManager.Instance.LastRoundWinner)
+            //if ( GameManager.Instance.LastRoundWinner)
+            if (ChallengeManager.Instance.CurrentLevelSuccess)
             {
                 VideoManager.Instance.Play(VideoKey.success);
             }
@@ -77,7 +79,8 @@ namespace screens
                 if (!_leavingToNextState)
                 {
                     _leavingToNextState = true;
-                    if (GameManager.Instance.Turns > 3)
+                    //if (GameManager.Instance.Turns > 3)
+                    if (ChallengeManager.Instance.IsFinalChallenge())
                     {
                         GameManager.Instance.NextGameState();
                     }

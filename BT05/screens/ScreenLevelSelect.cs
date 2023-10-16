@@ -45,6 +45,8 @@ namespace screens
 
         public override void ScreenArriving()
         {
+            ChallengeManager.Instance.NextChallenge();
+
             _defaultAnimation.Hide();
             _defaultAnimation.Reset();
             //_leavingToNextState = false;
@@ -57,7 +59,7 @@ namespace screens
             PrimaryText = "";// "{{HOT_PINK}}Randomly choosing your challenge!";
             SecondaryText = "";// "{{WHITE}}Skip to level with keys:\n1. SickleCell\n2. CowMethane\n3. Wheat\n4. Mosquito\n5. HeartDisease";
 
-            _targetLevel = LevelDatabase.Instance.GetRandomLevelOfDifficulty(GameManager.Instance.GameDifficulty);
+            _targetLevel = LevelDatabase.Instance.GetRandomLevelOfDifficulty(ChallengeManager.Instance.CurrentLevelDifficulty());
 
             base.ScreenArriving();
         }
@@ -91,7 +93,7 @@ namespace screens
                     break;
                 case LevelSelectionPhases.RandomUntilCorrect:
 
-                    if (GameManager.Instance.Level == _targetLevel)
+                    if (GameManager.Instance.CurrentLevel == _targetLevel)
                     {
                         _levelPhase = LevelSelectionPhases.EndResult;
                         _defaultAnimation.Reset();
@@ -156,14 +158,14 @@ namespace screens
 
         void LevelHasBeenChosen()
         {
-            PrimaryText = "{{RED}}" + GameManager.Instance.Level;
-            SecondaryText = "{{WHITE}}Knock out this gene to:\n" + LevelDatabase.Instance.GetDescription(GameManager.Instance.Level);
+            PrimaryText = "{{RED}}" + GameManager.Instance.CurrentLevel;
+            SecondaryText = "{{WHITE}}Knock out this gene to:\n" + LevelDatabase.Instance.GetDescription(GameManager.Instance.CurrentLevel);
         }
 
         private void RandomlyChooseNewLevel()
         {
             GameManager.Instance.GenerateNewLevelChoice();
-            PrimaryText = "{{WHITE}}" + GameManager.Instance.Level;
+            PrimaryText = "{{WHITE}}" + GameManager.Instance.CurrentLevel;
         }
 
         public override void DrawSecondScreenInner(GameTime gameTime)
@@ -191,7 +193,7 @@ namespace screens
         {
             if (_firstShown)
             {
-                var level = GameManager.Instance.Level;
+                var level = GameManager.Instance.CurrentLevel;
                 var tex = SharedAssetManager.Instance.GetLevelTexture(level, _levelChosen);
                 var origin = new Vector2(tex.Width / 2f, tex.Height / 2f);
                 Rectangle rect = new Rectangle(900, 540, 800, 800);
@@ -208,10 +210,11 @@ namespace screens
         /// From a key press
         /// </summary>
         /// <param name="sickleCell"></param>
-        public void ChooseLevel(Level newLevel)
+        public void ChooseLevel_DebugKey(Level newLevel)
         {
             _targetLevel = newLevel;
-            GameManager.Instance.Level = newLevel;
+            //GameManager.Instance.Level = newLevel;
+            ChallengeManager.Instance.CurrentLevel = newLevel;
             LevelHasBeenChosen();
 
             _levelPhase = LevelSelectionPhases.EndResult;

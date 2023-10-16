@@ -104,7 +104,7 @@ namespace screens
             ShowSecondaryText = false;
             _highlightCorrectAnswerOnSecondScreen = false;
             _movementAllowed = true;
-            ++GameManager.Instance.Turns;
+            //++GameManager.Instance.Turns;
             base.ScreenArriving();
         }
 
@@ -246,7 +246,7 @@ namespace screens
             _offsetNucleotidesTweener.Update( gameTime.GetElapsedSeconds() );
             UpdateFSM(gameTime);
 
-            float maxSpeed = 2;   // was 3
+            float maxSpeed = 3;   // was 3
             float maxChange = 0.5f;  // was 2
 
             UpdateDrawables(gameTime);
@@ -491,7 +491,7 @@ namespace screens
 
             string correctFeedback = CheckCorrectIndex();
 
-            string _debugString = "                                                                 Level: " + GameManager.Instance.Level + "\n" +
+            string _debugString = "                                                                 Level: " + GameManager.Instance.CurrentLevel + "\n" +
                 "                                                                 ID: " + _nucleotideGlobalIndex + " " + correctFeedback + "\n";
             _debugString += "\n" + CurrentArea();
             // _debugString+= "\n" + "\n" + _completeSequenceOnScreen;
@@ -895,7 +895,7 @@ namespace screens
             for (int i = 0; i < pamMarkerIndexes.Count; ++i)
             {
                 int PAMIndex = pamMarkerIndexes[i];
-                var sequence = LevelDatabase.Instance.GetWrongNucleotides(GameManager.Instance.Level, i);
+                var sequence = LevelDatabase.Instance.GetWrongNucleotides(GameManager.Instance.CurrentLevel, i);
 
                 var startingIndex = PAMIndex - PAMOffset;
                 ReplaceRNASequence(sequence, startingIndex);
@@ -906,7 +906,7 @@ namespace screens
             // I think it should be anywhere by the first 1's in both direction
             // So, not 0 or 4... leaving 1,2,3
             int targetPAM = _random.Next(1, 3);
-            var correctSequence = LevelDatabase.Instance.GetCorrectNucleotides(GameManager.Instance.Level);
+            var correctSequence = LevelDatabase.Instance.GetCorrectNucleotides(GameManager.Instance.CurrentLevel);
             _correctIndex = pamMarkerIndexes[targetPAM] - PAMOffset;
             ReplaceRNASequence(correctSequence, _correctIndex);
         }

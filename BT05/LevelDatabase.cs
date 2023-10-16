@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BT05
 {
-    public enum GameDifficulty
+    public enum ChallengeDifficulty
     {
         easy,
         medium,
@@ -26,7 +26,7 @@ namespace BT05
     {
         public Level Name { get; set; } = Level.None;
 
-        public GameDifficulty GameDifficulty { get; set; } = GameDifficulty.none;
+        public ChallengeDifficulty GameDifficulty { get; set; } = ChallengeDifficulty.none;
         public string Title { get; set; } = "";
         public string Description { get; set; } = "";
 
@@ -54,7 +54,6 @@ namespace BT05
         const string FILE_LOCATION = "rna.csv";
 
         private static readonly LevelDatabase _instance = new LevelDatabase();
-        public static readonly double DRAWDOWN_SCALE_FACTOR = 0.2; // The numbers from the Drawdown website are out by a factor. I don't know what this is yet.
 
         public static LevelDatabase Instance
         {
@@ -68,7 +67,7 @@ namespace BT05
             LoadDataFromCSV();
         }
 
-        public List<Level> GetLevelsOfDifficulty( GameDifficulty targetDifficulty)
+        public List<Level> GetLevelsOfDifficulty( ChallengeDifficulty targetDifficulty)
         {
             List<Level> levels = new List<Level>();
 
@@ -83,7 +82,7 @@ namespace BT05
             return levels;
         }
 
-        public Level GetRandomLevelOfDifficulty( GameDifficulty targetDifficulty )
+        public Level GetRandomLevelOfDifficulty( ChallengeDifficulty targetDifficulty )
         {
             var levels = GetLevelsOfDifficulty( targetDifficulty );
 
