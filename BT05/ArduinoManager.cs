@@ -232,13 +232,13 @@ namespace BT05
                         if (string.Compare(parameter, "ENGLISH", true) == 0)
                         {
                             Language lang = Language.english;
-                            _language = lang;
+                            Lang = lang;
                         }
 
                         if (string.Compare(parameter, "HINDI", true) == 0)
                         {
                             Language lang = Language.hindi;
-                            _language = lang;
+                            Lang = lang;
                         }
                     }
                 }

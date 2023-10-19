@@ -5,6 +5,7 @@ int encoderPin1 = 2;
 int encoderPin2 = 3;
 
 int BUTTON_PIN = 8;
+int LANGUAGE_TOGGLE_PIN = 10;
 
 volatile int lastEncoded = 0;
 volatile long encoderValue = 0;
@@ -16,6 +17,7 @@ int lastMSB = 0;
 int lastLSB = 0;
 
 Bounce debouncer = Bounce();
+Bounce debouncerLanguage = Bounce();
 
 void setup() {
   Serial.begin (9600);
@@ -34,11 +36,15 @@ void setup() {
   debouncer.attach(BUTTON_PIN, INPUT_PULLUP); // Attach the debouncer to a pin with INPUT_PULLUP mode
   debouncer.interval(25);                     // Use a debounce interval of 25 milliseconds
 
+  debouncerLanguage.attach(LANGUAGE_TOGGLE_PIN, INPUT_PULLUP);
+  debouncerLanguage.interval(25);                     // Use a debounce interval of 25 milliseconds
+
+
   //pinMode(BUTTON_PIN, INPUT_PULLUP);
 
   Serial.flush();
   Serial.println();
-  Serial.println("Rotary Encoded Launched. Version #1.00. 2023-09-19");
+  Serial.println("Rotary Encoded Launched. Version #1.05. 2023-10-19 Added language toggle");
   Serial.flush();
 }
 
@@ -46,6 +52,7 @@ void loop(){
   // Do stuff here
   
   CheckForButtonPress();
+  CheckForLanguageToggle();
 //  delay(100); //just here to slow down the output, and show it will work  even during a delay
   SendRotaryEncoder();
 }
@@ -74,6 +81,21 @@ void updateEncoder(){
   if(sum == 0b1110 || sum == 0b0111 || sum == 0b0001 || sum == 0b1000) encoderValue --;
 
   lastEncoded = encoded; //store this value for next time
+}
+
+void CheckForLanguageToggle()
+{
+  debouncerLanguage.update();
+
+    if (debouncerLanguage.fell())
+  {
+    Serial.println("LANGUAGE|ENGLISH");
+  }
+
+  if (debouncerLanguage.rose())
+  {
+    Serial.println("LANGUAGE|HINDI");
+  }
 }
 
 void CheckForButtonPress()
