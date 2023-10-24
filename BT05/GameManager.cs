@@ -255,9 +255,9 @@ namespace BT05
             Language = newValue;
         }
 
-        internal void NextGameState(object nextPhase)
-        {
-            throw new NotImplementedException();
-        }
+        //internal void NextGameState(object nextPhase)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

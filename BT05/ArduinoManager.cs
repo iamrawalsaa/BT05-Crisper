@@ -1,7 +1,9 @@
 ﻿using screens;
+using shared;
 using SharedMonoGame;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -164,22 +166,28 @@ namespace BT05
 
         void OpenSerialPort(string portName)
         {
-            _mySerialPort = new SerialPort(portName);
+            try
+            {
+                _mySerialPort = new SerialPort(portName);
 
-            //SerialPort mySerialPort = new SerialPort("COM1");
+                //SerialPort mySerialPort = new SerialPort("COM1");
 
-            _mySerialPort.BaudRate = 9600;
-            _mySerialPort.Parity = Parity.None;
-            _mySerialPort.StopBits = StopBits.One;
-            _mySerialPort.DataBits = 8;
-            _mySerialPort.Handshake = Handshake.None;
-            _mySerialPort.RtsEnable = true;
+                _mySerialPort.BaudRate = 9600;
+                _mySerialPort.Parity = Parity.None;
+                _mySerialPort.StopBits = StopBits.One;
+                _mySerialPort.DataBits = 8;
+                _mySerialPort.Handshake = Handshake.None;
+                _mySerialPort.RtsEnable = true;
 
-            _mySerialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+                _mySerialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
 
-            _mySerialPort.Open();
-            //_mySerialPort.Write("M"); // initiate the query
-
+                _mySerialPort.Open();
+                //_mySerialPort.Write("M"); // initiate the query
+            }
+            catch(Exception ex)
+            {
+                DebugOutput.Instance.WriteError("Unable to open arduino serial port: " +ex.Message);
+            }
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)

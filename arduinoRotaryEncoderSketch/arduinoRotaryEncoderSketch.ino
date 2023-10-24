@@ -1,11 +1,15 @@
 #include <Bounce2.h>
 
+bool sensorOut = HIGH;
+bool PIRold = HIGH; 
+
 //these pins can not be changed 2/3 are special pins
 int encoderPin1 = 2;
 int encoderPin2 = 3;
 
 int BUTTON_PIN = 8;
 int LANGUAGE_TOGGLE_PIN = 10;
+int PIR_PIN = 5;
 
 volatile int lastEncoded = 0;
 volatile long encoderValue = 0;
@@ -18,6 +22,7 @@ int lastLSB = 0;
 
 Bounce debouncer = Bounce();
 Bounce debouncerLanguage = Bounce();
+Bounce debouncerWave = Bounce();
 
 void setup() {
   Serial.begin (9600);
@@ -39,12 +44,18 @@ void setup() {
   debouncerLanguage.attach(LANGUAGE_TOGGLE_PIN, INPUT_PULLUP);
   debouncerLanguage.interval(25);                     // Use a debounce interval of 25 milliseconds
 
+  //debouncerWave.attach(PIR_PIN, INPUT_PULLUP);
+  //debouncerWave.interval(25);
+
+  pinMode(PIR_PIN, INPUT);
 
   //pinMode(BUTTON_PIN, INPUT_PULLUP);
 
   Serial.flush();
   Serial.println();
   Serial.println("Rotary Encoded Launched. Version #1.05. 2023-10-19 Added language toggle");
+  Serial.println("Rotary Encoded Launched. Version #1.06. 2023-10-19 Adding Wave sensor");
+  
   Serial.flush();
 }
 
@@ -53,8 +64,31 @@ void loop(){
   
   CheckForButtonPress();
   CheckForLanguageToggle();
+  //CheckPIRDebounce();
 //  delay(100); //just here to slow down the output, and show it will work  even during a delay
   SendRotaryEncoder();
+
+  CheckPIR();
+}
+
+void CheckPIR()
+{
+  sensorOut = digitalRead(PIR_PIN);
+ 
+  if (PIRold != sensorOut)
+  {
+    if(sensorOut == LOW)
+    {
+      Serial.println("WAVE|ON");
+    }
+    else
+    {
+      Serial.println("WAVE|OFF");
+    }
+  }
+
+ PIRold = sensorOut;
+
 }
 
 void SendRotaryEncoder()
