@@ -232,7 +232,10 @@ namespace BT05
 
                     if (string.Compare(command, "WAVE", true) == 0)
                     {
-                        MyScreenManager.Instance.CurrentScreen.WaveHappened();
+                        if (MyScreenManager.Instance.CurrentScreen != null)
+                        {
+                            MyScreenManager.Instance.CurrentScreen.WaveHappened();
+                        }
                     }
 
                     if (string.Compare(command, "LANGUAGE", true) == 0)

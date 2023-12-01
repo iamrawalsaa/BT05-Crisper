@@ -337,6 +337,11 @@ namespace BT05
                 GameManager.Instance.NextGameState(MyScreenManager.Instance.CurrentScreen.NextPhase);
             }
 
+            if (JustPressed(Keys.R))
+            {
+                SharedAssetManager.Instance.HotReloadTextures();
+            }
+
             KeyPressesMainGame();
             KeyPressesLanguage();
             KeyPressesAttract();
@@ -412,10 +417,10 @@ namespace BT05
                     screenGame.ScrollToCorrectPamMarker();
                 }
 
-                if (JustPressed(Keys.R))
-                {
-                    screenGame.ResetSpline();
-                }
+                //if (JustPressed(Keys.R))
+                //{
+                //    screenGame.ResetSpline();
+                //}
 
                 if (JustPressed(Keys.OemPeriod))
                 {

@@ -39,7 +39,7 @@ namespace SharedMonoGame
         {
             LoadBasicTextures(game);
             LoadFonts(game);
-            LoadBackgrounds(game);
+            //LoadBackgrounds(game);
             InitColours();
             //LoadParticles(game);
         }
@@ -72,7 +72,6 @@ namespace SharedMonoGame
             _missing = game.Content.Load<Texture2D>("missing");
             _textureDatabase.Add("blank", _blank);
             _textureDatabase.Add("missing", _missing);
-
         }
 
         private void InitColours()
@@ -175,6 +174,61 @@ namespace SharedMonoGame
                 try
                 {
                     texture = _game.Content.Load<Texture2D>(filename);
+                }
+                catch (Exception ex)
+                {
+                    DebugOutput.Instance.WriteError("File exists but there is an error loading file: " + filename);
+                    DebugOutput.Instance.WriteError(ex.ToString());
+                    System.Windows.Forms.MessageBox.Show("File exists but there is an error loading file: " + filename + "\nPossible image is too large in pixels. Must be 4096 or below. Ideally smaller.", "Asset file loading problem");
+                }
+            }
+
+            return texture;
+        }
+
+
+        /// <summary>
+        /// Without using the Content Pipeline
+        /// It searches for .png and .pjg files and loads them directly
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        protected Texture2D LoadTextureSafeDirect(string filename)
+        {
+            Texture2D texture = null;
+
+            string pngFilename = @"graphics\" + filename + ".png";
+            string jpgFilename = @"graphics\" + filename + ".jpg";
+
+            bool pngExists = File.Exists(pngFilename);
+            bool jpgExists = File.Exists(jpgFilename);
+
+            if ( !pngExists && !jpgExists)
+            {
+                DebugOutput.Instance.WriteError("Expected File is missing: " + filename);
+                System.Windows.Forms.MessageBox.Show("Expected File is missing: " + filename, "Asset file missing");
+            }
+            else
+            {
+                try
+                {
+                    if ( pngExists )
+                    {
+                        using (var stream = File.OpenRead(pngFilename))
+                        {
+                            
+                            texture = Texture2D.FromStream(_game.Graphics.GraphicsDevice, stream);
+                        }
+                    }
+
+                    if (jpgExists)
+                    {
+                        using (var stream = File.OpenRead(pngFilename))
+                        {
+                            texture = Texture2D.FromStream(_game.Graphics.GraphicsDevice, stream);
+                        }
+                    }
+
                 }
                 catch (Exception ex)
                 {

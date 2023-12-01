@@ -70,6 +70,9 @@ namespace screens
             _scissorsComponent.ScissorsAvailable = true;
             _scissorsComponent.PlayScissorAnimationOnCompletion = false;
 
+            // hide the scissors - doesn't work
+            // _scissorsComponent.Visible = false; 
+
             LanguageStateChanged();
         }
 
@@ -98,32 +101,46 @@ namespace screens
 
             if (_arrow== null || force)
             {
-                CreateScissors();
+                // CreateScissors();
 
-                if (_arrow != null) RemoveTweenerSprite(_arrow);
-                if (_english != null) RemoveTweenerSprite(_english);
-                if (_hindi != null) RemoveTweenerSprite(_hindi);
-
-                _arrow = new TweenerSprite(SharedAssetManager.Instance.GetTextureFromName("Arrow"));
-                _english = new TweenerSprite(SharedAssetManager.Instance.GetTextureFromName("LanguageEnglish"));
-                _hindi = new TweenerSprite(SharedAssetManager.Instance.GetTextureFromName("LanguageHindi"));
-
-                _arrow.MyTransform.Position = new Vector2(1000, 540);
-                _arrow.MyTransform.Rotation = (float)0;
-                _arrow.MyTransform.Scale = new Vector2(0.7f, 0.7f);
-
-                _english.MyTransform.Position = new Vector2(500, 250);
-                _english.MyTransform.Rotation = (float)-Math.PI / 2;
-                _english.MyTransform.Scale = new Vector2(0.5f, 0.5f);
-
-                _hindi.MyTransform.Position = new Vector2(500, 820);
-                _hindi.MyTransform.Rotation = (float)-Math.PI / 2;
-                _hindi.MyTransform.Scale = new Vector2(0.5f, 0.5f);
-
-                AddTweenerSprite(_english);
-                AddTweenerSprite(_hindi);
-                AddTweenerSprite(_arrow);
+                CreateTweeners();
             }
+        }
+
+        /// <summary>
+        /// This creates the buttons and arrow
+        /// 
+        /// I've moved this into the backgrounds so it is no longer needed.
+        /// </summary>
+        private void CreateTweeners()
+        {
+            if (_arrow != null) RemoveTweenerSprite(_arrow);
+            if (_english != null) RemoveTweenerSprite(_english);
+            if (_hindi != null) RemoveTweenerSprite(_hindi);
+
+            _arrow = new TweenerSprite(SharedAssetManager.Instance.GetTextureFromName("Arrow"));
+            _english = new TweenerSprite(SharedAssetManager.Instance.GetTextureFromName("LanguageEnglish"));
+            _hindi = new TweenerSprite(SharedAssetManager.Instance.GetTextureFromName("LanguageHindi"));
+
+            _arrow.MyTransform.Position = new Vector2(1000, 540);
+            _arrow.MyTransform.Rotation = (float)0;
+            _arrow.MyTransform.Scale = new Vector2(0.7f, 0.7f);
+
+            _english.MyTransform.Position = new Vector2(500, 250);
+            _english.MyTransform.Rotation = (float)-Math.PI / 2;
+            _english.MyTransform.Scale = new Vector2(0.5f, 0.5f);
+
+            _hindi.MyTransform.Position = new Vector2(500, 820);
+            _hindi.MyTransform.Rotation = (float)-Math.PI / 2;
+            _hindi.MyTransform.Scale = new Vector2(0.5f, 0.5f);
+
+            AddTweenerSprite(_english);
+            AddTweenerSprite(_hindi);
+            AddTweenerSprite(_arrow);
+
+            _english.MySprite.Alpha = 0.0f;
+            _hindi.MySprite.Alpha = 0.0f;
+            _arrow.MySprite.Alpha = 0.0f;
         }
 
         public override void Update(GameTime gameTime)
@@ -191,16 +208,22 @@ namespace screens
                     break;
                 case Language.english:
                     ShowPrimaryText = false;
-                    ShowSecondaryText = true;
+                    ShowSecondaryText = false;
                     SecondaryText = "{{WHITE}}Operate scissors to choose English";
-                    _scissorsComponent.Visible = true;
-
+                    if (_scissorsComponent != null)
+                    {
+                        _scissorsComponent.Visible = true;
+                    }
                     break;
                 case Language.hindi:
                     ShowPrimaryText = false;
-                    ShowSecondaryText = true;
+                    ShowSecondaryText = false;
                     SecondaryText = "{{WHITE}}हिंदी चुनने के लिए कैंची चलाएं";
-                    _scissorsComponent.Visible = true;
+
+                    if (_scissorsComponent != null)
+                    {
+                        _scissorsComponent.Visible = true;
+                    }
                     break;
             }
         }

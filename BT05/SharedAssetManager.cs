@@ -6,6 +6,7 @@ using screens;
 using shared;
 using SharedMonoGame;
 using SharpDX.Direct3D9;
+using SharpDX.XAudio2;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -85,8 +86,7 @@ namespace BT05
             texture = game.Content.Load<Texture2D>("overlaySuccess");
             _textureDatabase.Add("OverlaySuccess", texture);
 
-            texture = game.Content.Load<Texture2D>("backgrounds/background-game-broken");
-            _textureDatabase.Add("BackgroundGameBroken", texture);
+            
 
             texture = game.Content.Load<Texture2D>("sprites/arrow");
             _textureDatabase.Add("Arrow", texture);
@@ -97,7 +97,7 @@ namespace BT05
             texture = game.Content.Load<Texture2D>("sprites/language-hindi");
             _textureDatabase.Add("LanguageHindi", texture);
 
-            LoadBackgroundsSecondScreen(game);
+            LoadBackgroundsSecondScreen();
             LoadAnimations();
             LoadLevels();
 
@@ -114,16 +114,16 @@ namespace BT05
             {
                 if ( o != GameOverlays.none && o!= GameOverlays.max )
                 {
-                    string englishTextureName = "gameOverlays\\game_" + o;
-                    string hindiTextureName = "gameOverlays-Hindi\\game_" + o;
+                    string englishTextureName = "overlays\\english\\game_" + o;
+                    string hindiTextureName = "overlays\\hindi\\game_" + o;
 
-                    var textureEnglish = LoadTextureSafe(englishTextureName);
+                    var textureEnglish = LoadTextureSafeDirect(englishTextureName);
                     if(textureEnglish != null )
                     {
                         _gameOverlaysEnglish.Add(o, textureEnglish);
                     }
                     
-                    var textureHindi = LoadTextureSafe(hindiTextureName);
+                    var textureHindi = LoadTextureSafeDirect(hindiTextureName);
                     if (textureHindi != null)
                     {
                         _gameOverlaysHindi.Add(o, textureHindi);
@@ -169,7 +169,7 @@ namespace BT05
             {
                 if (l!= Level.None && l!= Level.MAX_LEVEL)
                 {
-                    var tex = LoadTextureSafe("levels/"+l.ToString().ToLower());
+                    var tex = LoadTextureSafeDirect("levels/"+l.ToString().ToLower());
                     if (tex != null)
                     {
                         _levelTextures.Add(l, tex);
@@ -242,34 +242,34 @@ namespace BT05
         public Texture2D ModelTextureDoubleHelix { get { return _modelTextureDoubleHelix; } }
         public Texture2D ModelTextureDoubleHelixTrans { get { return _modelTextureDoubleHelixTrans; } }
 
-        private void Load3DModels(MyGameBase game)
-        {
-            _PAMModel = game.Content.Load<Model>("models/CylinderPAM");
-            _cylinderModel = game.Content.Load<Model>("models/CylinderPAM");
-            _cylinderWithTopModel = game.Content.Load<Model>("models/CylinderPAM");
-            _testModel = game.Content.Load<Model>("models/trees_pine");
-            _testModelTexture = game.Content.Load<Texture2D>("models/palette");
-            _doubleHelixModel = game.Content.Load<Model>("models/doubleHelixMesh");
+        //private void Load3DModels(MyGameBase game)
+        //{
+        //    _PAMModel = game.Content.Load<Model>("models/CylinderPAM");
+        //    _cylinderModel = game.Content.Load<Model>("models/CylinderPAM");
+        //    _cylinderWithTopModel = game.Content.Load<Model>("models/CylinderPAM");
+        //    _testModel = game.Content.Load<Model>("models/trees_pine");
+        //    _testModelTexture = game.Content.Load<Texture2D>("models/palette");
+        //    _doubleHelixModel = game.Content.Load<Model>("models/doubleHelixMesh");
 
-            LoadModelTextures(game);
-        }
+        //    LoadModelTextures(game);
+        //}
 
-        private void LoadModelTextures(MyGameBase game)
-        {
-            // Load the Textures
-            _modelTextureA = game.Content.Load<Texture2D>("models/A");
-            _modelTextureC = game.Content.Load<Texture2D>("models/C");
-            _modelTextureG = game.Content.Load<Texture2D>("models/G");
-            _modelTextureT = game.Content.Load<Texture2D>("models/T");
-            _modelTextureNone = game.Content.Load<Texture2D>("models/None");
+        //private void LoadModelTextures(MyGameBase game)
+        //{
+        //    // Load the Textures
+        //    _modelTextureA = game.Content.Load<Texture2D>("models/A");
+        //    _modelTextureC = game.Content.Load<Texture2D>("models/C");
+        //    _modelTextureG = game.Content.Load<Texture2D>("models/G");
+        //    _modelTextureT = game.Content.Load<Texture2D>("models/T");
+        //    _modelTextureNone = game.Content.Load<Texture2D>("models/None");
 
-            _modelTexturePAM = game.Content.Load<Texture2D>("models/PAM");
+        //    _modelTexturePAM = game.Content.Load<Texture2D>("models/PAM");
 
-            _modelTextureDoubleHelix = game.Content.Load<Texture2D>("models/doubleHelixPalette");
-            _modelTextureDoubleHelixTrans = game.Content.Load<Texture2D>("models/doubleHelixPaletteTrans");
+        //    _modelTextureDoubleHelix = game.Content.Load<Texture2D>("models/doubleHelixPalette");
+        //    _modelTextureDoubleHelixTrans = game.Content.Load<Texture2D>("models/doubleHelixPaletteTrans");
 
-            // A C G T PAM None
-        }
+        //    // A C G T PAM None
+        //}
 
         void LoadNucleotides(MyGameBase game)
         {
@@ -332,43 +332,73 @@ namespace BT05
             _textureDatabase.Add(name,texture);
         }
 
-        private void LoadBackgroundsSecondScreen(MyGameBase game)
+        /// <summary>
+        /// This is a useful tool to help the graphic designers
+        /// You can change files in the graphics folder and hot reload them midgame
+        /// </summary>
+        public void HotReloadTextures()
         {
+            _textureDatabase.Remove("BackgroundGameBroken");
+
+            _backgrounds.Clear();
+            _backgroundsHindi.Clear();
+            _backgroundsSecondScreen.Clear();
+            _backgroundsSecondScreenHindi.Clear();
+
+            LoadBackgroundsSecondScreen();
+        }
+
+        private void LoadBackgroundsSecondScreen()
+        {
+            Texture2D texture = LoadTextureSafeDirect("backgrounds/game-broken");
+            _textureDatabase.Add("BackgroundGameBroken", texture);
+
             foreach (GamePhase phase in Enum.GetValues(typeof(GamePhase)))
             {
                 if (phase != GamePhase.NONE)
                 {
-                    AddBackgroundSecondScreen(game, phase);
-                    AddBackgroundSecondScreenHindi(game, phase);
-                    AddBackgroundHindi(game, phase);
+                    AddBackgroundSecondScreenEnglish(phase);
+                    AddBackgroundSecondScreenHindi(phase);
+                    AddBackgroundHindi(phase);
+                    AddBackgroundEnglish(phase);
                 }
             }
         }
 
-        private void AddBackgroundHindi(MyGameBase game, GamePhase phase)
+        private void AddBackgroundEnglish(GamePhase phase)
         {
-            string filename = "backgrounds-Hindi/background-" + phase;
-            var texture = LoadTextureSafe(filename);
+            string filename = "backgrounds/english55/" + phase;
+            var texture = LoadTextureSafeDirect(filename);
+            if (texture != null)
+            {
+                _backgrounds.Add(phase, texture);
+            }
+        }
+
+        private void AddBackgroundHindi(GamePhase phase)
+        {
+            string filename = "backgrounds/hindi55/" + phase;
+            var texture = LoadTextureSafeDirect(filename);
             if (texture != null)
             {
                 _backgroundsHindi.Add(phase, texture);
             }
         }
 
-        private void AddBackgroundSecondScreenHindi(MyGameBase game, GamePhase phase)
+        private void AddBackgroundSecondScreenHindi(GamePhase phase)
         {
-            string filename = "backgroundsSecondScreen-Hindi/background-" + phase;
-            var texture = LoadTextureSafe(filename);
+            string filename = "backgrounds/hindi24/" + phase;
+            var texture = LoadTextureSafeDirect(filename);
             if (texture != null)
             {
                 _backgroundsSecondScreenHindi.Add(phase, texture);
             }
         }
 
-        private void AddBackgroundSecondScreen(MyGameBase game, GamePhase phase)
+        private void AddBackgroundSecondScreenEnglish(GamePhase phase)
         {
-            string filename = "backgroundsSecondScreen/background-" + phase;
-            var texture = LoadTextureSafe(filename);
+            string filename = "backgrounds/english24/" + phase;
+            var texture = LoadTextureSafeDirect(filename);
             if (texture != null)
             {
                 _backgroundsSecondScreen.Add(phase, texture);

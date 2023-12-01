@@ -400,7 +400,12 @@ namespace SharedMonoGame
 
         private void DrawBackground()
         {
-            Game._spriteBatch.Draw(SharedAssetManager.Instance.GetBackground(_phase, GameManager.Instance.Language), Vector2.Zero, Microsoft.Xna.Framework.Color.White);
+            Microsoft.Xna.Framework.Graphics.Texture2D primaryBackgroundTex = SharedAssetManager.Instance.GetBackground(_phase, GameManager.Instance.Language);
+            float rotation = (float)-Math.PI / 2;
+            Vector2 position = new Vector2(1920, 1080/2);
+            Vector2 textureCentre = new Vector2(primaryBackgroundTex.Width / 2,primaryBackgroundTex.Height); 
+            Game._spriteBatch.Draw(primaryBackgroundTex, position,null, Microsoft.Xna.Framework.Color.White, rotation, textureCentre, 1.0f, SpriteEffects.None,1);
+
         }
 
         /// <summary>
@@ -769,10 +774,14 @@ namespace SharedMonoGame
         {
             Rectangle rect = new Rectangle(0, 0, 1920, 1080);
 
-            var background = SharedAssetManager.Instance.GetBackgroundSecondScreen(Phase,GameManager.Instance.Language);
-            if (background != null)
+            var secondarybackgroundTex = SharedAssetManager.Instance.GetBackgroundSecondScreen(Phase,GameManager.Instance.Language);
+            if (secondarybackgroundTex != null)
             {
-                Game._spriteBatch.Draw(background, rect, Color.White);
+                //Game._spriteBatch.Draw(background, rect, Color.White);
+                float rotation = (float)-Math.PI / 2;
+                Vector2 position = new Vector2(1920, 1080 / 2);
+                Vector2 textureCentre = new Vector2(secondarybackgroundTex.Width / 2, secondarybackgroundTex.Height);
+                Game._spriteBatch.Draw(secondarybackgroundTex, position, null, Microsoft.Xna.Framework.Color.White, rotation, textureCentre, 1.0f, SpriteEffects.None, 1);
             }
         }
 
