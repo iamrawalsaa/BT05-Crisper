@@ -103,7 +103,7 @@ namespace BT05
                 case GamePhase.PROTOTYPEMESSAGES:
                     ScreenPrototypeMessages screenPrototype = MyScreenManager.Instance.GetScreen(GamePhase.PROTOTYPEMESSAGES) as ScreenPrototypeMessages;
 
-                    screenPrototype.PrimaryText = "{{HOT_PINK}}Version: 5.20 1st Dec 2023\n\n{{WHITE}}This is a playable version of BT05.\nThis runs across two screens.\nThis Hot Reloads graphics content from the graphics/ folder. Just edit the png files\n";
+                    screenPrototype.PrimaryText = "{{HOT_PINK}}Version: 5.21 21st Dec 2023\n\n{{WHITE}}This is a playable version of BT05.\nThis runs across two screens.\nThis Hot Reloads graphics content from the graphics/ folder. Just edit the png files\n";
                     //screenPrototype.SecondaryText = "{{HOT_PINK}}Keys\n{{BLUE}}Enter: {{WHITE}}jump to next state\n{{BLUE}}G:{{WHITE}} Large Window\n{{BLUE}}F:{{WHITE}} Fullscreen\n{{BLUE}}V:{{WHITE}} Dual screen mode\n{{BLUE}}M:{{WHITE}} Mini screens (dual screen mode)\n{{BLUE}}B:{{WHITE}} Swap screens (dual screen mode)\n{{BLUE}}W:{{WHITE}} Wave\n{{BLUE}}N:{{WHITE}} Toggle mouse in Game Mode\n{{BLUE}}";
                     screenPrototype.SecondaryText = "{{HOT_PINK}}Keys\n{{BLUE}}Enter: {{WHITE}}jump to next state\n{{BLUE}}V:{{WHITE}} Dual screen mode\n{{BLUE}}M:{{WHITE}} Mini screens (dual screen mode)\n{{BLUE}}B:{{WHITE}} Swap screens (dual screen mode)\n{{BLUE}}W:{{WHITE}} Wave\n{{BLUE}}N:{{WHITE}} Toggle mouse in Game Mode\n{{BLUE}}R:{{WHITE}}Hot Reload graphic content";
 

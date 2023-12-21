@@ -114,6 +114,13 @@ namespace screens
 
         public override void LoadContent()
         {
+            // This is an extra catch - incase players have used debug keys to skip the initialisation
+            //  Note: it will cause more issues - but it stops the crash at least
+            if (GameManager.Instance.CurrentLevel == Level.None)
+            {
+                ChallengeManager.Instance.JumpToLevel(ChallengeDifficulty.easy, Level.None);
+            }
+
             LoadContentOnce();
 
             CreateLongerNucleotideSequences(_singleNucleotideSection * 5);

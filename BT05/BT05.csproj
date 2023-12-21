@@ -46,17 +46,6 @@
     <ProjectReference Include="..\FSMSharp\FSMSharp.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Extended.VideoPlayback">
-      <HintPath>..\references\MonoGame.Extended.VideoPlayback.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoGame.Extended2">
-      <HintPath>..\references\MonoGame.Extended2.dll</HintPath>
-    </Reference>
-    <Reference Include="Sdcb.FFmpeg">
-      <HintPath>..\references\Sdcb.FFmpeg.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <None Update="Content\MainHelixSpline.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

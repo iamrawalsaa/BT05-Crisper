@@ -133,6 +133,8 @@ namespace BT05
 
         public List<NucleotideEnum> GetWrongNucleotides(Level level, int id = -1)
         {
+            
+
             var levelData = _levelDatabase[level];
 
             string nucleotideSequence = levelData.GetWrongSequence(id);

@@ -334,7 +334,10 @@ namespace BT05
 
             if (JustPressed(Keys.Enter))
             {
-                GameManager.Instance.NextGameState(MyScreenManager.Instance.CurrentScreen.NextPhase);
+                if ( MyScreenManager.Instance.CurrentPhase != GamePhase.LEVELSELECT)
+                {
+                    GameManager.Instance.NextGameState(MyScreenManager.Instance.CurrentScreen.NextPhase);
+                }
             }
 
             if (JustPressed(Keys.R))
