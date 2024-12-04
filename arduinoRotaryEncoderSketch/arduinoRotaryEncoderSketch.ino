@@ -7,9 +7,9 @@ bool PIRold = HIGH;
 int encoderPin1 = 2;
 int encoderPin2 = 3;
 
-int BUTTON_PIN = 8;
-int LANGUAGE_TOGGLE_PIN = 10;
-int PIR_PIN = 5;
+int BUTTON_PIN = 29;
+int LANGUAGE_TOGGLE_PIN = 47;
+int PIR_PIN = 25;
 
 volatile int lastEncoded = 0;
 volatile long encoderValue = 0;
